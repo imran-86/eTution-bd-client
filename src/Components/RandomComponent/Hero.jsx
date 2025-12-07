@@ -53,26 +53,26 @@ export default function Hero() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 container mx-auto px-4 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+      <div className="relative z-10 container mx-auto px-4 pt-12  ">
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
           {/* Left Content */}
           <div className="text-white space-y-8 ">
-            <div className="space-y-4 h-96">
+            <div className="py-4 h-72">
               <div className="inline-block">
-                <span className={`px-4 py-2 bg-gradient-to-r ${slides[currentSlide].gradient} rounded-full text-sm font-semibold text-white shadow-lg animate-fade-in`}>
+                <span className={`px-4 py-2 mb-5 bg-gradient-to-r ${slides[currentSlide].gradient} rounded-full text-sm font-semibold text-white shadow-lg animate-fade-in`}>
                   🎓 #1 Online Tutoring Platform
                 </span>
               </div>
               
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight animate-slide-up">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-slide-up">
                 {slides[currentSlide].title}
               </h1>
               
-              <h2 className={`text-2xl md:text-3xl font-semibold bg-gradient-to-r ${slides[currentSlide].gradient} bg-clip-text text-transparent animate-slide-up`}>
+              <h2 className={`text-1xl md:text-2xl font-semibold bg-gradient-to-r ${slides[currentSlide].gradient} bg-clip-text text-transparent animate-slide-up`}>
                 {slides[currentSlide].subtitle}
               </h2>
               
-              <p className="text-lg md:text-xl text-gray-300 leading-relaxed animate-slide-up">
+              <p className="text-xl md:text-lg text-gray-300 leading-relaxed animate-slide-up">
                 {slides[currentSlide].description}
               </p>
             </div>
@@ -91,7 +91,7 @@ export default function Hero() {
 
           {/* Right Content - Image Slider */}
           <div className="relative">
-            <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative h-[400px] rounded-3xl overflow-hidden shadow-2xl">
               {slides.map((slide, index) => (
                 <div
                   key={index}

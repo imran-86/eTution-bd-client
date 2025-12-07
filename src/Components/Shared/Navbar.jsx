@@ -23,7 +23,7 @@ const Navbar = () => {
      <li><NavLink className='mr-4'>Contact Us</NavLink></li>
   </>
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-base-100 shadow-sm md:px-30 sticky top-0 z-100">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
