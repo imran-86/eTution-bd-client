@@ -1,7 +1,20 @@
-import React from "react";
+import React, { use } from "react";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
+import { User } from "lucide-react";
 
 const Navbar = () => {
+
+  const {user,logOut} = use(AuthContext);
+
+  const handleSignOut= () =>{
+      logOut()
+      .then(result=>{
+        console.log(result);
+        
+      })
+  }
+
   const links = <>
      <li><NavLink className='mr-4'>Home</NavLink></li>
      <li><NavLink className='mr-4'>Tuitions</NavLink></li>
@@ -45,7 +58,22 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end space-x-2">
-        <Link to="/login">Login</Link> <span>/</span><Link to="/register">Register</Link>
+        {
+          user?
+          <div className="dropdown dropdown-end">
+    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+      <User></User>
+    </div>
+     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+      <li><a>Profile</a></li>
+      <li><button onClick={handleSignOut}>Logout</button></li>
+    </ul>
+    </div>:
+          <div>
+            <Link to="/login">Login</Link> <span>/</span><Link to="/register">Register</Link>
+          </div>
+        }
+        
       </div>
     </div>
   );

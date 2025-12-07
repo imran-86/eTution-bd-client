@@ -1,9 +1,10 @@
 import React from 'react';
+import Hero from '../Components/RandomComponent/Hero';
 
 const Home = () => {
     return (
         <div>
-            Home
+            <Hero></Hero>
         </div>
     );
 };
