@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { Eye, EyeOff, UserCircle, GraduationCap, Mail, Lock, Phone, User } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../Context/AuthContext';
+import { useNavigate } from 'react-router';
 
 export default function Register() {
   const {register,handleSubmit,formState:{errors}} = useForm();
@@ -8,13 +10,19 @@ export default function Register() {
     role: 'student'
   });
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
  
- 
+   const {createUser} = use(AuthContext);
  
   const handleRegistration = (data) => {
     const role = formData.role;
     data.role = role;
-   console.log(data);
+  //  console.log(data);
+    createUser(data.email,data.password).then(result=>{
+      console.log(result.user);
+      navigate('/')
+    })
+
    
   };
 
