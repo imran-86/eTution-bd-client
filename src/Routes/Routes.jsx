@@ -3,7 +3,8 @@ import RootLayouts from "../Layouts/RootLayouts";
 import Home from "../Pages/Home";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
-import Tuitions from "../Components/RandomComponent/Tuitions";
+import Tuitions from "../Pages/Tuitions";
+
 
 const  router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const  router = createBrowserRouter([
         },
         {
           path: 'tuitions',
-          Component: Tuitions,
+          Component: Tuitions
         }
     ]
   },

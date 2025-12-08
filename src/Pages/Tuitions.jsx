@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import useAxios from '../../Hooks/useAxios';
+import useAxios from '../Hooks/useAxios';
+
 
 const Tuitions = () => {
     const [tuitions, setTuitions] = useState([]);
