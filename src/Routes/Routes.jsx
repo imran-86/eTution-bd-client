@@ -3,6 +3,7 @@ import RootLayouts from "../Layouts/RootLayouts";
 import Home from "../Pages/Home";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
+import Tuitions from "../Components/RandomComponent/Tuitions";
 
 const  router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const  router = createBrowserRouter([
         {
           path: 'register',
           Component: Register
+        },
+        {
+          path: 'tuitions',
+          Component: Tuitions,
         }
     ]
   },

@@ -1,46 +1,65 @@
-import React, { useEffect, useState } from 'react';
-import { AuthContext } from './AuthContext';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '../Firebase/firebase.config';
+import React, { useEffect, useState } from "react";
+import { AuthContext } from "./AuthContext";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { auth } from "../Firebase/firebase.config";
+import useAxios from "../Hooks/useAxios";
 
-const AuthProvider = ({children}) => {
-
-    const [loading,setLoading] = useState(true);
-    const [user,setUser] = useState(null);
-
-    const createUser = (email,password)=>{
-        setLoading(true);
-        return createUserWithEmailAndPassword(auth,email,password)
+const AuthProvider = ({ children }) => {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const axiosInstance = useAxios();
+  const createUser = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+  const signInUser = (email,password) =>{
+         setLoading(true);
+         return signInWithEmailAndPassword(auth,email,password)
     }
-   const logOut = ()=>{
-        setLoading(true);
-        return signOut(auth);
-     }
+  const logOut = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
 
-    useEffect(()=>{
-        const unSubscribe = onAuthStateChanged(auth,(currentUser)=>{
-            setUser(currentUser)
-            setLoading(false)
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      console.log(currentUser);
+      
+      if (currentUser) {
+        const loggedUser = {email: currentUser.email};
+        axiosInstance.post('/getToken',loggedUser)
+        .then(data=>{
+            console.log('after getting the token ',data.data);
+            localStorage.setItem('token', data.data.token)
+
+            
         })
-        return ()=>{
-            unSubscribe();
-        }
-    },[])
+      }
+      setLoading(false);
+    });
+    return () => {
+      unSubscribe();
+    };
+  }, []);
 
-    const authInfo = {
-        user,
-        loading,
-        setLoading,
-        setUser,
-        createUser,
-        logOut
-    }
+  const authInfo = {
+    user,
+    loading,
+    setLoading,
+    setUser,
+    createUser,
+    logOut,
+    signInUser,
+  };
 
-    return (
-        <AuthContext value={authInfo}>
-            {children}
-        </AuthContext>
-    );
+  return <AuthContext value={authInfo}>{children}</AuthContext>;
 };
 
 export default AuthProvider;
