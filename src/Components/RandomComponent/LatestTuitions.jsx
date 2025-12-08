@@ -6,7 +6,7 @@ const LatestTuitions = () => {
   const axiosInstance = useAxios();
   useEffect(() => {
     axiosInstance.get("/tuitions").then((data) => {
-      console.log(data.data);
+    //   console.log(data.data);
       setLatestTuitions(data.data);
     });
   }, []);
