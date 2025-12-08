@@ -4,6 +4,7 @@ import Home from "../Pages/Home";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
 import Tuitions from "../Pages/Tuitions";
+import Tutors from "../Pages/Tutors";
 
 
 const  router = createBrowserRouter([
@@ -27,6 +28,10 @@ const  router = createBrowserRouter([
         {
           path: 'tuitions',
           Component: Tuitions
+        },
+        {
+          path: 'tutors',
+          Component: Tutors
         }
     ]
   },
