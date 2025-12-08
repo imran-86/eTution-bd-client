@@ -44,7 +44,7 @@ export default function Hero() {
   };
 
   return (
-    <div className="max-w-10/12 mx-auto relative min-h-screen overflow-hidden">
+    <div className="max-w-10/12 mx-auto relative  overflow-hidden">
       {/* Animated Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
