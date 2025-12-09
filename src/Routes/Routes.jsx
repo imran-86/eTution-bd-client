@@ -8,6 +8,7 @@ import Tutors from "../Pages/Tutors";
 import AboutUs from "../Pages/AboutUs";
 import DashBoardLayout from "../Layouts/DashBoardLayout";
 import PostTuition from "../Pages/Dashboard/Student/PostTuition";
+import ManageTuition from "../Pages/Dashboard/Admin/ManageTuition";
 
 
 const  router = createBrowserRouter([
@@ -49,6 +50,10 @@ const  router = createBrowserRouter([
       {
         path:'post-tuition',
         Component: PostTuition
+      },
+      {
+        path: 'manage-tuition',
+        Component: ManageTuition
       }
     ]
   }

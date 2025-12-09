@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import useAxios from '../../Hooks/useAxios';
 
 export default function Register() {
+
   const {register,handleSubmit,formState:{errors}} = useForm();
   const [formData, setFormData] = useState({
     role: 'student'
@@ -24,8 +25,9 @@ export default function Register() {
   //  console.log(data);
     createUser(data.email,data.password).then(result=>{
       console.log(result.user);
-    axiosInstance.post("/user" , data).then((data) => {
-    //   console.log(data.data);
+    axiosInstance.post("/user" , data).then((res) => {
+      console.log(res.data);
+      
      
     });
   
@@ -35,8 +37,20 @@ export default function Register() {
    
   };
    const handleGoogleSignIn = ()=>{
+
+     
       signInWithGoogle()
       .then((result)=>{
+         const userData = {
+        name : result.user?.displayName,
+        email: result.user?.email,
+        role: formData.role
+
+      }
+        axiosInstance.post("/user" , userData).then((res) => {
+      console.log(res.data);
+     
+    });
         navigate('/')
         console.log(result);
         

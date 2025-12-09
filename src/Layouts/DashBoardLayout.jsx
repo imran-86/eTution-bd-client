@@ -1,8 +1,25 @@
-import { BadgeDollarSign, FileUser, House, Landmark, ListCollapse, Milestone, UserRoundPen } from "lucide-react";
-import React from "react";
+import { BadgeDollarSign, FileUser, House, Landmark, ListCollapse, Milestone, NotebookTabs, UserRoundPen } from "lucide-react";
+import React, { use } from "react";
 import { Link, Outlet } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
+import { useQuery } from "@tanstack/react-query";
+import useAxios from "../Hooks/useAxios";
 
 const DashBoardLayout = () => {
+  
+  const {user} = use(AuthContext);
+  const axiosInstance = useAxios();
+  const {data: userInfo = []} = useQuery({
+    queryKey: ['user',user?.email],
+    queryFn: async ()=>{
+        const res = await axiosInstance.get(`/user?email=${user.email}`);
+        // console.log(res.data);
+        
+        return res.data;
+    }
+  })
+  // console.log(userInfo);
+  
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -45,9 +62,30 @@ const DashBoardLayout = () => {
               </Link>
             </li>
 
+            {
+              userInfo?.role === 'admin' && <div>
+                <Link
+                to="/dashboard/manage-tuition"
+                >    
+                <li>
+              <button
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Manage Tuition"
+              >
+                {/* Settings icon */}
+               <NotebookTabs />
+                <span className="is-drawer-close:hidden">Manage tuition</span>
+              </button>
+            </li>
+            </Link>
+            </div>
+            }
+            {
 
-           
-             {/* List item */}
+            }
+            {
+              user?.role === 'student' && <div>
+                  {/* List item */}
             <li>
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -109,6 +147,11 @@ const DashBoardLayout = () => {
               </button>
              
             </li>
+
+              </div>
+            }
+           
+         
           </ul>
         </div>
       </div>
