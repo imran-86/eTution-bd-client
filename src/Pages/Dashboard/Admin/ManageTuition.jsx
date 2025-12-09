@@ -39,7 +39,7 @@ export default function ManageTuition() {
     setSelectedTuition(null);
   };
  const handleApprove =  (tuitionId) => {
-  console.log(tuitionId);
+  // console.log(tuitionId);
   setActionLoading(true);
   
   try {
@@ -54,7 +54,7 @@ export default function ManageTuition() {
     }).then(result=>{
           if (result.isConfirmed) {
 
-        axiosInstance.patch(`/tuitions/${tuitionId}`)
+        axiosInstance.patch(`/tuitions/${tuitionId}` , { status: 'Approved' })
         refetch();
       
       Swal.fire({
@@ -81,7 +81,47 @@ export default function ManageTuition() {
     });
   }
 };
+const handleReject = async (tuitionId) => {
+    setActionLoading(true);
+     try {
+     Swal.fire({
+      title: "Are you sure?",
+      text: "You want to rejected this tuition?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, reject it!",
+    }).then(result=>{
+          if (result.isConfirmed) {
 
+        axiosInstance.patch(`/tuitions/${tuitionId}` , { status: 'Rejected' })
+        refetch();
+      
+      Swal.fire({
+        title: "Rejected!",
+        text: "Tuition has been rejected.",
+        icon: "success",
+      });
+    }
+    })
+
+   
+    
+    setShowModal(false);
+    setActionLoading(false);
+    
+  } catch (error) {
+    console.error("Error approving tuition:", error);
+    setActionLoading(false);
+    
+    Swal.fire({
+      title: "Error!",
+      text: "Failed to approve tuition.",
+      icon: "error",
+    });
+  }
+  };
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center">
@@ -221,6 +261,7 @@ export default function ManageTuition() {
                             <Check className="w-4 h-4" />
                           </button>
                           <button
+                           onClick={() => handleReject(tuition._id)}
                             className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-all"
                             title="Reject"
                           >
@@ -376,6 +417,7 @@ export default function ManageTuition() {
                 {/* Action Buttons */}
                 <div className="flex gap-3 pt-4 border-t border-gray-200">
                   <button
+                  onClick={() => handleApprove(selectedTuition._id)}
                     disabled={actionLoading}
                     className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all disabled:opacity-50"
                   >
@@ -411,6 +453,7 @@ export default function ManageTuition() {
                     )}
                   </button>
                   <button
+                   onClick={() => handleReject(selectedTuition._id)}
                     disabled={actionLoading}
                     className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-all disabled:opacity-50"
                   >
