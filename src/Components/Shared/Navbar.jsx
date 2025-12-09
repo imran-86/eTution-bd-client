@@ -20,7 +20,11 @@ const Navbar = () => {
      <li><NavLink to="/tuitions" className='mr-4'>Tuitions</NavLink></li>
      <li><NavLink to="/tutors" className='mr-4'>Tutor</NavLink></li>
      <li><NavLink to="/about" className='mr-4'>About</NavLink></li>
-     <li><NavLink className='mr-4'>Contact Us</NavLink></li>
+     <li><NavLink className='mr-4'>Contact</NavLink></li>
+     {
+      user&&<li><NavLink to="/dashboard" className='mr-4'>Dashboard</NavLink></li>
+     }
+     
   </>
   return (
     <div className="navbar bg-base-100 shadow-sm md:px-30 sticky top-0 z-100">

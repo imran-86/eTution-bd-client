@@ -6,6 +6,8 @@ import Register from "../Pages/Auth/Register";
 import Tuitions from "../Pages/Tuitions";
 import Tutors from "../Pages/Tutors";
 import AboutUs from "../Pages/AboutUs";
+import DashBoardLayout from "../Layouts/DashBoardLayout";
+import PostTuition from "../Pages/Dashboard/Student/PostTuition";
 
 
 const  router = createBrowserRouter([
@@ -40,5 +42,15 @@ const  router = createBrowserRouter([
         }
     ]
   },
+  {
+    path: 'dashboard',
+    Component: DashBoardLayout,
+    children: [
+      {
+        path:'post-tuition',
+        Component: PostTuition
+      }
+    ]
+  }
 ]);
 export default router;

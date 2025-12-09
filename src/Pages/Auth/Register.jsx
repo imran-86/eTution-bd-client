@@ -1,8 +1,9 @@
-import { use, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { Eye, EyeOff, UserCircle, GraduationCap, Mail, Lock, Phone, User } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Context/AuthContext';
 import { useNavigate } from 'react-router';
+import useAxios from '../../Hooks/useAxios';
 
 export default function Register() {
   const {register,handleSubmit,formState:{errors}} = useForm();
@@ -13,6 +14,9 @@ export default function Register() {
   const navigate = useNavigate();
  
    const {createUser,signInWithGoogle} = use(AuthContext);
+
+  const axiosInstance = useAxios();
+  
  
   const handleRegistration = (data) => {
     const role = formData.role;
@@ -20,6 +24,11 @@ export default function Register() {
   //  console.log(data);
     createUser(data.email,data.password).then(result=>{
       console.log(result.user);
+    axiosInstance.post("/user" , data).then((data) => {
+    //   console.log(data.data);
+     
+    });
+  
       navigate('/')
     })
 
