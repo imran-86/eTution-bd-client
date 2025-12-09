@@ -16,6 +16,9 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function ManageTuition() {
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTuition, setSelectedTuition] = useState(null);
+   const [actionLoading, setActionLoading] = useState(false);
   const axiosInstance = useAxios();
   const { data: pendingTuitions = [] } = useQuery({
     queryKey: ["pendingTuitions" , 'Pending'],
@@ -27,6 +30,15 @@ export default function ManageTuition() {
     },
   });
 
+   const handleView = (tuition) => {
+    setSelectedTuition(tuition);
+    setShowModal(true);
+  };
+   const closeModal = () => {
+    setShowModal(false);
+    setSelectedTuition(null);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center">
@@ -37,6 +49,7 @@ export default function ManageTuition() {
       </div>
     );
   }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 py-12 px-4">
@@ -152,7 +165,7 @@ export default function ManageTuition() {
                       <td className="px-6 py-4">
                         <div className="flex items-center justify-center gap-2">
                           <button
-                           
+                           onClick={() => handleView(tuition)}
                             className="p-2 bg-indigo-100 text-indigo-600 rounded-lg hover:bg-indigo-200 transition-all"
                             title="View Details"
                           >
@@ -178,6 +191,160 @@ export default function ManageTuition() {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+        )}
+        {showModal && selectedTuition && (
+          <div className="fixed inset-0  bg-transparent bg-opacity-50 flex items-center justify-center p-4 z-50 transition ease-in-out duration-500">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              {/* Modal Header */}
+              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white sticky top-0">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h2 className="text-3xl font-bold mb-2">{selectedTuition.subject}</h2>
+                    <p className="text-indigo-100">{selectedTuition.class}</p>
+                  </div>
+                  <button
+                    onClick={closeModal}
+                    className="text-white hover:bg-white/20 rounded-full p-2 transition-all"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 space-y-6">
+                {/* Student Information */}
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">Student Information</h3>
+                  <div className="space-y-2 bg-gray-50 rounded-lg p-4">
+                   
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Email:</span>
+                      <span className="font-semibold text-gray-900">{selectedTuition.studentEmail}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Gender:</span>
+                      <span className="font-semibold text-gray-900">{selectedTuition.studentGender}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tuition Details */}
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">Tuition Details</h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <BookOpen className="w-4 h-4 text-indigo-600" />
+                        <span className="text-sm text-gray-600">Subject</span>
+                      </div>
+                      <p className="font-semibold text-gray-900">{selectedTuition.subject}</p>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <BookOpen className="w-4 h-4 text-indigo-600" />
+                        <span className="text-sm text-gray-600">Class</span>
+                      </div>
+                      <p className="font-semibold text-gray-900">{selectedTuition.class}</p>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <MapPin className="w-4 h-4 text-indigo-600" />
+                        <span className="text-sm text-gray-600">Location</span>
+                      </div>
+                      <p className="font-semibold text-gray-900">{selectedTuition.location}</p>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <DollarSign className="w-4 h-4 text-green-600" />
+                        <span className="text-sm text-gray-600">Budget</span>
+                      </div>
+                      <p className="font-semibold text-gray-900">৳{selectedTuition.budget}/month</p>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <User className="w-4 h-4 text-purple-600" />
+                        <span className="text-sm text-gray-600">Tutor Preference</span>
+                      </div>
+                      <p className="font-semibold text-gray-900">{selectedTuition.tutorGender}</p>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Calendar className="w-4 h-4 text-blue-600" />
+                        <span className="text-sm text-gray-600">Days Per Week</span>
+                      </div>
+                      <p className="font-semibold text-gray-900">{selectedTuition.daysPerWeek} days</p>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4 md:col-span-2">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Clock className="w-4 h-4 text-orange-600" />
+                        <span className="text-sm text-gray-600">Duration</span>
+                      </div>
+                      <p className="font-semibold text-gray-900">{selectedTuition.duration} per session</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">Description</h3>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <p className="text-gray-700 leading-relaxed">{selectedTuition.description}</p>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-3 pt-4 border-t border-gray-200">
+                  <button
+                   
+                    disabled={actionLoading}
+                    className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all disabled:opacity-50"
+                  >
+                    {actionLoading ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <Check className="w-5 h-5" />
+                        Approve
+                      </>
+                    )}
+                  </button>
+                  <button
+                   
+                    disabled={actionLoading}
+                    className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-all disabled:opacity-50"
+                  >
+                    {actionLoading ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <X className="w-5 h-5" />
+                        Reject
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}
