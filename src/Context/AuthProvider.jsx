@@ -38,13 +38,13 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log(currentUser);
+      // console.log(currentUser);
       
       if (currentUser) {
         const loggedUser = {email: currentUser.email};
         axiosInstance.post('/getToken',loggedUser)
         .then(data=>{
-            console.log('after getting the token ',data.data);
+            // console.log('after getting the token ',data.data);
             localStorage.setItem('token', data.data.token)
 
             

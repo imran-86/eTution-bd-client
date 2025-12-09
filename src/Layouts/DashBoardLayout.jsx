@@ -84,7 +84,7 @@ const DashBoardLayout = () => {
 
             }
             {
-              user?.role === 'student' && <div>
+              userInfo?.role === 'student' && <div>
                   {/* List item */}
             <li>
               <button
