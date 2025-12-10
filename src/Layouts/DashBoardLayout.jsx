@@ -1,4 +1,4 @@
-import { BadgeDollarSign, FileUser, House, Landmark, ListCollapse, Milestone, NotebookTabs, UserRoundPen } from "lucide-react";
+import { BadgeDollarSign, FileUser, House, Landmark, ListCollapse, Milestone, NotebookTabs, SquareUser, UserRoundPen } from "lucide-react";
 import React, { use } from "react";
 import { Link, Outlet } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
@@ -75,6 +75,20 @@ const DashBoardLayout = () => {
                 {/* Settings icon */}
                <NotebookTabs />
                 <span className="is-drawer-close:hidden">Manage tuition</span>
+              </button>
+            </li>
+            </Link>
+             <Link
+                to="/dashboard/manage-users"
+                >    
+                <li>
+              <button
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Manage Users"
+              >
+                {/* Settings icon */}
+               <SquareUser></SquareUser>
+                <span className="is-drawer-close:hidden">Manage Users</span>
               </button>
             </li>
             </Link>

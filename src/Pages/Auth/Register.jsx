@@ -22,6 +22,7 @@ export default function Register() {
   const handleRegistration = (data) => {
     const role = formData.role;
     data.role = role;
+    data.createdAt = new Date();
   //  console.log(data);
     createUser(data.email,data.password).then(result=>{
       console.log(result.user);

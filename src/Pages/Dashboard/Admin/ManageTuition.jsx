@@ -54,14 +54,17 @@ export default function ManageTuition() {
     }).then(result=>{
           if (result.isConfirmed) {
 
-        axiosInstance.patch(`/tuitions/${tuitionId}` , { status: 'Approved' })
-        refetch();
-      
-      Swal.fire({
+        axiosInstance.patch(`/tuitions/${tuitionId}` , { status: 'Approved' }).then(result=>{
+          console.log(result);
+            refetch();
+            Swal.fire({
         title: "Approved!",
         text: "Tuition has been approved.",
         icon: "success",
       });
+        })
+        
+    
     }
     })
 
@@ -95,14 +98,17 @@ const handleReject = async (tuitionId) => {
     }).then(result=>{
           if (result.isConfirmed) {
 
-        axiosInstance.patch(`/tuitions/${tuitionId}` , { status: 'Rejected' })
-        refetch();
+        axiosInstance.patch(`/tuitions/${tuitionId}` , { status: 'Rejected' }).then(result=>{
+          console.log(result);
+             refetch();
       
       Swal.fire({
         title: "Rejected!",
         text: "Tuition has been rejected.",
         icon: "success",
       });
+        })
+     
     }
     })
 

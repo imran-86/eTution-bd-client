@@ -14,7 +14,7 @@ export default function PostTuition() {
   
   const subjects = [
     'Mathematics', 'Physics', 'Chemistry', 'Biology', 'English',
-    'Computer Science', 'Accounting', 'Economics', 'Statistics', 'History'
+    'ICT', 'Accounting', 'Economics', 'Statistics', 'History'
   ];
 
   const classes = [
