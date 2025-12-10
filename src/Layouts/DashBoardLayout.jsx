@@ -100,6 +100,9 @@ const DashBoardLayout = () => {
             {
               userInfo?.role === 'student' && <div>
                   {/* List item */}
+                <Link
+                to="/dashboard/approved-tuition"
+                >
             <li>
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -110,6 +113,7 @@ const DashBoardLayout = () => {
                 <span className="is-drawer-close:hidden">My tuition</span>
               </button>
             </li>
+            </Link>
 
             <li>
               <button

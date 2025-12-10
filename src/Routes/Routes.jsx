@@ -10,6 +10,7 @@ import DashBoardLayout from "../Layouts/DashBoardLayout";
 import PostTuition from "../Pages/Dashboard/Student/PostTuition";
 import ManageTuition from "../Pages/Dashboard/Admin/ManageTuition";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import MyTuition from "../Pages/Dashboard/Student/ApprovedTuition";
 
 
 const  router = createBrowserRouter([
@@ -31,7 +32,7 @@ const  router = createBrowserRouter([
           Component: Register
         },
         {
-          path: 'tuitions',
+          path: 'all-tuitions',
           Component: Tuitions
         },
         {
@@ -59,6 +60,10 @@ const  router = createBrowserRouter([
       {
         path: "manage-users",
         Component: ManageUsers,
+      },
+      {
+        path: 'approved-tuition',
+        Component: MyTuition
       }
     ]
   }
