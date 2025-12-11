@@ -58,7 +58,38 @@ const Navbar = () => {
            {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <Link
+        to="/"
+        >
+          <svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+ 
+  <circle cx="30" cy="30" r="26" fill="url(#gradient1)" />
+  
+ 
+  <path d="M20 18C20 17.4477 20.4477 17 21 17H28C28.5523 17 29 17.4477 29 18V42C29 42.5523 28.5523 43 28 43H21C20.4477 43 20 42.5523 20 42V18Z" fill="white" />
+  <path d="M31 18C31 17.4477 31.4477 17 32 17H39C39.5523 17 40 17.4477 40 18V42C40 42.5523 39.5523 43 39 43H32C31.4477 43 31 42.5523 31 42V18Z" fill="white" />
+  
+  
+  <path d="M30 14L18 19L30 24L42 19L30 14Z" fill="#FFD700" stroke="#FFD700" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M42 19V25L30 30L18 25V19" stroke="#FFD700" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  
+  <text x="65" y="28" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#4F46E5">
+    TutorHub
+  </text>
+  <text x="65" y="44" font-family="Arial, sans-serif" font-size="10" fill="#6B7280">
+    Learn. Teach. Grow.
+  </text>
+  
+  <defs>
+    <linearGradient id="gradient1" x1="4" y1="4" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="50%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#EC4899"/>
+    </linearGradient>
+  </defs>
+</svg>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">

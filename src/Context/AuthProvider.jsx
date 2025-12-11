@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../Firebase/firebase.config";
 import useAxios from "../Hooks/useAxios";
@@ -33,6 +34,10 @@ const AuthProvider = ({ children }) => {
    const signInWithGoogle = () => {
         setLoading(true);
         return signInWithPopup(auth, googleProvider);
+    };
+     const updateUser = (userData) => {
+        setLoading(true)
+        return updateProfile(auth.currentUser,userData)
     };
 
   useEffect(() => {
@@ -65,7 +70,8 @@ const AuthProvider = ({ children }) => {
     createUser,
     logOut,
     signInUser,
-    signInWithGoogle
+    signInWithGoogle,
+    updateUser,
   };
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;

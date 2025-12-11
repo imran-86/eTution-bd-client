@@ -13,6 +13,7 @@ import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import MyTuition from "../Pages/Dashboard/Student/ApprovedTuition";
 import OngoingTuitions from "../Pages/Dashboard/Tutor/OngoingTuitions";
 import AppliedTutors from "../Pages/Dashboard/Student/AppliedTutors";
+import PaymentSuccess from "../Pages/Dashboard/Student/PaymentSuccess";
 
 
 const  router = createBrowserRouter([
@@ -75,6 +76,10 @@ const  router = createBrowserRouter([
       {
         path: 'applied-tutors',
         Component: AppliedTutors
+      },
+      {
+        path: 'payment-success',
+        Component: PaymentSuccess
       }
     ]
   }
