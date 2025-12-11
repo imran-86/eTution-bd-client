@@ -25,6 +25,8 @@ export default function ManageTuition() {
     queryKey: ["pendingTuitions", "Pending"],
     queryFn: async () => {
       const res = await axiosInstance.get("/tuitions?status=Pending");
+      console.log(res.data);
+      
       setLoading(false);
       return res.data;
     },

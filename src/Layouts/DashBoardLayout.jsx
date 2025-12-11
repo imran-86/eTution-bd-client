@@ -63,7 +63,8 @@ const DashBoardLayout = () => {
             </li>
 
             {
-              userInfo?.role === 'admin' && <div>
+              userInfo?.role === 'admin' && 
+              <div>
                 <Link
                 to="/dashboard/manage-tuition"
                 >    
@@ -95,6 +96,37 @@ const DashBoardLayout = () => {
             </div>
             }
             {
+              userInfo?.role === 'tutor' && 
+              <div>
+                <Link
+                to="/dashboard/ongoing-tuitions"
+                >    
+                <li>
+              <button
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Ongoing Tuition"
+              >
+                {/* Settings icon */}
+               <NotebookTabs />
+                <span className="is-drawer-close:hidden">Ongoing tuition</span>
+              </button>
+            </li>
+            </Link>
+             <Link
+                to="/dashboard/manage-users"
+                >    
+                <li>
+              <button
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Manage Users"
+              >
+                {/* Settings icon */}
+               <SquareUser></SquareUser>
+                <span className="is-drawer-close:hidden">Manage Users</span>
+              </button>
+            </li>
+            </Link>
+            </div>
 
             }
             {
