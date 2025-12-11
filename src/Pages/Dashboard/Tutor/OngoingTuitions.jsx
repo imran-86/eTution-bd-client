@@ -1,14 +1,25 @@
-import { useState } from 'react';
-import { Eye, BookOpen, MapPin, DollarSign, Calendar, User, Clock, CheckCircle, X } from 'lucide-react';
+import { use, useState } from 'react';
+import { Eye, BookOpen, MapPin, DollarSign, Calendar, User, Clock, CheckCircle, X, Send } from 'lucide-react';
 import useAxios from '../../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
+import { AuthContext } from '../../../Context/AuthContext';
+import Swal from 'sweetalert2';
 
 export default function OngoingTuitions() {
   const [selectedTuition, setSelectedTuition] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showApplyModal, setShowApplyModal] = useState(false);
+  const [applyLoading, setApplyLoading] = useState(false);
+  const [applicationForm, setApplicationForm] = useState({
+  qualifications: '',
+  experience: '',
+  expectedSalary: ''
+});
   
+  const { user } = use(AuthContext);
   const axiosInstance = useAxios();
 
+  
   const { data: approvedTuitions = [], isLoading } = useQuery({
     queryKey: ['approvedTuitions', 'Approved'],
     queryFn: async () => {
@@ -17,16 +28,87 @@ export default function OngoingTuitions() {
       return res.data;
     },
   });
-
-  const handleView = (tuition) => {
+  const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setApplicationForm({
+    ...applicationForm,
+    [name]: value
+  });
+};
+ 
+  const handleApply = (tuition) => {
     setSelectedTuition(tuition);
-    setShowModal(true);
+    setShowApplyModal(true);
+  };
+  const closeApplyModal = () => {
+  setShowApplyModal(false);
+  setSelectedTuition(null);
+  setApplicationForm({
+    qualifications: '',
+    experience: '',
+    expectedSalary: ''
+  });
+};
+
+  const handleSubmitApplication = (event) => {
+    event.preventDefault();
+    setApplyLoading(true);
+    
+    try {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You want to apply for this tuition?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, apply!'
+      }).then(result => {
+        if (result.isConfirmed) {
+         
+            axiosInstance.post(`/applications`, {
+             tuitionId: selectedTuition._id,
+      tuitionTitle:`${selectedTuition.subject} - ${selectedTuition.class}`,
+      studentEmail : selectedTuition.studentEmail,
+      tutorName: user?.name,
+      tutorEmail: user?.email,
+      qualifications: applicationForm.qualifications,
+      experience: applicationForm.experience,
+      expectedSalary: parseFloat(applicationForm.expectedSalary),
+      status: 'Pending',
+      appliedAt: new Date().toISOString()
+          });
+          
+          console.log('Application submitted for:', selectedTuition._id);
+          
+          Swal.fire({
+            title: 'Applied!',
+            text: 'Your application has been submitted successfully.',
+            icon: 'success'
+          });
+          closeApplyModal();
+          setShowApplyModal(false);
+         
+          
+        }
+      });
+      
+      setApplyLoading(false);
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      setApplyLoading(false);
+      
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to submit application.',
+        icon: 'error'
+      });
+    }
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedTuition(null);
-  };
+ 
+
+  
 
   if (isLoading) {
     return (
@@ -129,11 +211,11 @@ export default function OngoingTuitions() {
                       <td className="px-6 py-4">
                         <div className="flex items-center justify-center gap-2">
                           <button
-                            onClick={() => handleView(tuition)}
-                            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all text-sm font-semibold flex items-center gap-1"
+                            onClick={() => handleApply(tuition)}
+                            className="px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all text-sm font-semibold flex items-center gap-1"
                           >
-                            <Eye className="w-4 h-4" />
-                            View Details
+                            <Send className="w-4 h-4" />
+                            Apply
                           </button>
                         </div>
                       </td>
@@ -145,56 +227,48 @@ export default function OngoingTuitions() {
           </div>
         )}
 
-        {/* View Modal */}
-        {showModal && selectedTuition && (
-          <div className="fixed inset-0  bg-transparent bg-opacity-50 flex items-center justify-center p-4 z-50 transition ease-in-out duration-500">
-            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              {/* Modal Header */}
-              <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6 text-white sticky top-0">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <h2 className="text-3xl font-bold">{selectedTuition.subject}</h2>
-                      <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold flex items-center gap-1">
-                        <CheckCircle className="w-3 h-3" />
-                        Available
-                      </span>
-                    </div>
-                    <p className="text-green-100">{selectedTuition.class}</p>
-                  </div>
-                  <button
-                    onClick={closeModal}
-                    className="text-white hover:bg-white/20 rounded-full p-2 transition-all"
-                  >
-                    <X className="w-6 h-6" />
-                  </button>
-                </div>
-              </div>
+      
 
-              {/* Modal Body */}
-              <div className="p-6 space-y-6">
-                {/* Student Information */}
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Student Information</h3>
-                  <div className="space-y-2 bg-gray-50 rounded-lg p-4">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Name:</span>
-                      <span className="font-semibold text-gray-900">{selectedTuition.studentName}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Email:</span>
-                      <span className="font-semibold text-gray-900">{selectedTuition.studentEmail}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Gender:</span>
-                      <span className="font-semibold text-gray-900">{selectedTuition.studentGender}</span>
-                    </div>
-                  </div>
-                </div>
+       
+       {/* Apply Modal */}
+{showApplyModal && selectedTuition && user && (
+  <div className="fixed inset-0  bg-transparent bg-opacity-50 flex items-center justify-center p-4 z-50 transition ease-in-out duration-500 z-50">
+    <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      
+      {/* Modal Header */}
+      <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6 text-white sticky top-0">
+        <div className="flex justify-between items-start">
+          <div>
+            <h2 className="text-3xl font-bold mb-2">Apply for Tuition</h2>
+            <p className="text-green-100">{selectedTuition.subject} - {selectedTuition.class}</p>
+          </div>
+          <button
+            type="button"
+            onClick={closeApplyModal}
+            className="text-white hover:bg-white/20 rounded-full p-2 transition-all"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+      </div>
 
-                {/* Tuition Details */}
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Tuition Details</h3>
+      {/* Modal Body */}
+      <form onSubmit={handleSubmitApplication} className="p-6 space-y-6">
+        
+        {/* Info Message */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <p className="text-sm text-blue-800">
+            <strong>Note:</strong> Please review the tuition information below before submitting your application.
+          </p>
+        </div>
+        
+        {/* Tuition Summary */}
+        <div>
+          <h3 className="text-lg font-bold text-gray-900 mb-4">Tuition Summary</h3>
+          <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+           
+            <div>
+                 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-gray-50 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-1">
@@ -253,41 +327,130 @@ export default function OngoingTuitions() {
                     </div>
                   </div>
                 </div>
+          </div>
+        </div>
 
-                {/* Description */}
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Requirements</h3>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-gray-700 leading-relaxed">{selectedTuition.description}</p>
-                  </div>
-                </div>
+        {/* Tutor Information*/}
+        <div>
+          <h3 className="text-lg font-bold text-gray-900 mb-4">Your Information</h3>
+          <div className="space-y-4">
+            {/* Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Full Name
+              </label>
+              <input
+                type="text"
+                value={user?.name || ''}
+                readOnly
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed"
+              />
+            </div>
 
-                {/* Posted Date */}
-                <div className="pt-4 border-t border-gray-200">
-                  <p className="text-sm text-gray-500">
-                    Posted on: {new Date(selectedTuition.createdAt).toLocaleDateString('en-US', {
-                      month: 'long',
-                      day: 'numeric',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
-                  </p>
-                </div>
+            {/* Email  */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                value={user?.email || ''}
+                readOnly
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed"
+              />
+            </div>
 
-                {/* Apply Button */}
-                <div className="pt-4 border-t border-gray-200">
-                  <button className="w-full px-6 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-bold text-lg hover:from-green-700 hover:to-emerald-700 transition-all shadow-lg">
-                    Apply for This Tuition
-                  </button>
-                  <p className="text-center text-sm text-gray-500 mt-3">
-                    Click to submit your application for this tuition opportunity
-                  </p>
-                </div>
+            {/* Qualifications */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Qualifications *
+              </label>
+              <textarea
+                name="qualifications"
+                value={applicationForm.qualifications}
+                onChange={handleInputChange}
+                required
+                rows="3"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                placeholder="Enter your educational qualifications..."
+              />
+            </div>
+
+            {/* Experience */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Experience *
+              </label>
+              <input
+                type="text"
+                name="experience"
+                value={applicationForm.experience}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                placeholder="e.g., 3 years of teaching experience"
+              />
+            </div>
+
+            {/* Expected Salary */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Expected Salary (per month) *
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-3 text-gray-500">৳</span>
+                <input
+                  type="number"
+                  name="expectedSalary"
+                  value={applicationForm.expectedSalary}
+                  onChange={handleInputChange}
+                  required
+                  min="1"
+                  className="w-full pl-8 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  placeholder="5000"
+                />
               </div>
             </div>
           </div>
-        )}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-3 pt-4 border-t border-gray-200">
+          <button
+            type="submit"
+            disabled={applyLoading}
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all disabled:opacity-50"
+          >
+            {applyLoading ? (
+              <>
+                <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Submitting...
+              </>
+            ) : (
+              <>
+                <Send className="w-5 h-5" />
+                Submit Application
+              </>
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={closeApplyModal}
+            className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all"
+          >
+            Cancel
+          </button>
+        </div>
+        
+      </form>
+    
+      
+    </div>
+  </div>
+)}
       </div>
     </div>
   );
