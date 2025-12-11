@@ -33,7 +33,7 @@ const Tutors = () => {
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-3">
                                             <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                                                {tutor.name.charAt(0)}
+                                                {tutor.name}
                                             </div>
                                             <div>
                                                 <h3 className="text-xl font-bold text-gray-900">
@@ -53,18 +53,8 @@ const Tutors = () => {
                                         </div>
                                     </div>
 
-                                    {/* Expected Salary Badge */}
-                                    <div className="flex justify-between items-center">
-                                        <span className="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
-                                            ৳{tutor.expectedSalary}/month
-                                        </span>
-                                         <Link
-                                         
-                                         to="/view-tutor-profile"
-                                          className="text-blue-600 text-sm">
-                                           <li className=' list-none hover:border-b-1'>View full profile</li> 
-                                        </Link>
-                                    </div>
+                                
+                                   
                                 </div>
 
                                 {/* Hover Overlay */}

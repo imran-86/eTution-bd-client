@@ -146,7 +146,9 @@ const DashBoardLayout = () => {
               </button>
             </li>
             </Link>
-
+            <Link
+            to="/dashboard/applied-tutors"
+            >
             <li>
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -158,6 +160,7 @@ const DashBoardLayout = () => {
               </button>
               
             </li>
+            </Link>
              <li>
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"

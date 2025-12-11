@@ -61,7 +61,7 @@ const LatestTutors = () => {
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-3">
                                             <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                                                {tutor.name.charAt(0)}
+                                                {tutor.name}
                                             </div>
                                             <div>
                                                 <h3 className="text-xl font-bold text-gray-900">

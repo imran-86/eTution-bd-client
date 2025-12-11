@@ -78,6 +78,15 @@ export default function OngoingTuitions() {
       status: 'Pending',
       appliedAt: new Date().toISOString()
           });
+
+          axiosInstance.post('/tutors', {
+            name : user?.name,
+            email : user?.email,
+            qualifications : applicationForm.qualifications,
+            experience : applicationForm.experience,
+            submittedAt : new Date().toISOString()
+
+          })
           
           console.log('Application submitted for:', selectedTuition._id);
           
