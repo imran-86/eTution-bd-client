@@ -161,6 +161,10 @@ const DashBoardLayout = () => {
               
             </li>
             </Link>
+
+            <Link
+            to="/dashboard/payment-history"
+            >
              <li>
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -172,6 +176,7 @@ const DashBoardLayout = () => {
               </button>
               
             </li>
+            </Link>
 
              {/* List item */}
              <Link 
