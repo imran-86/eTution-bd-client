@@ -125,7 +125,7 @@ export default function AppliedTutors() {
     // <div>
     //     {applications.length}
     // </div>
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 py-12 px-4">
+    <div className="min-h-screen  py-12 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">

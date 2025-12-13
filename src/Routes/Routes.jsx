@@ -16,6 +16,7 @@ import AppliedTutors from "../Pages/Dashboard/Student/AppliedTutors";
 import PaymentSuccess from "../Pages/Dashboard/Student/PaymentSuccess";
 import PaymentHistory from "../Pages/Dashboard/Student/PaymentHistory";
 import ProfileSettings from "../Pages/Dashboard/Student/ProfileSettings";
+import ContactUs from "../Pages/ContactUs";
 
 
 const  router = createBrowserRouter([
@@ -47,6 +48,10 @@ const  router = createBrowserRouter([
         {
           path: 'about',
           Component: AboutUs
+        },
+        {
+          path: 'contact-us',
+          Component: ContactUs
         }
     ]
   },

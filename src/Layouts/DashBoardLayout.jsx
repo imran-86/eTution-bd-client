@@ -13,212 +13,183 @@ const DashBoardLayout = () => {
     queryKey: ['user',user?.email],
     queryFn: async ()=>{
         const res = await axiosInstance.get(`/user?email=${user.email}`);
-        // console.log(res.data);
-        
         return res.data;
     }
   })
-  // console.log(userInfo);
   
   return (
-    <div className="drawer lg:drawer-open">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
-          >
-            {/* Sidebar toggle icon */}
-            <ListCollapse />
-          </label>
-          <div className="px-4">Welcome e-tuition-bd</div>
-        </nav>
-        {/* Page content here */}
-        <Outlet></Outlet>
-      </div>
+    <div className="flex min-h-screen bg-gray-100">
+      {/* Sidebar */}
+      <aside className="w-64 bg-white shadow-lg ">
+        <div className="p-6 border-b">
+           <Link
+                  to="/"
+                  >
+                    <svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+           
+            <circle cx="30" cy="30" r="26" fill="url(#gradient1)" />
+            
+           
+            <path d="M20 18C20 17.4477 20.4477 17 21 17H28C28.5523 17 29 17.4477 29 18V42C29 42.5523 28.5523 43 28 43H21C20.4477 43 20 42.5523 20 42V18Z" fill="white" />
+            <path d="M31 18C31 17.4477 31.4477 17 32 17H39C39.5523 17 40 17.4477 40 18V42C40 42.5523 39.5523 43 39 43H32C31.4477 43 31 42.5523 31 42V18Z" fill="white" />
+            
+            
+            <path d="M30 14L18 19L30 24L42 19L30 14Z" fill="#FFD700" stroke="#FFD700" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M42 19V25L30 30L18 25V19" stroke="#FFD700" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            
+            
+            <text x="65" y="28" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#4F46E5">
+              TutorHub
+            </text>
+            <text x="65" y="44" font-family="Arial, sans-serif" font-size="10" fill="#6B7280">
+              Learn. Teach. Grow.
+            </text>
+            
+            <defs>
+              <linearGradient id="gradient1" x1="4" y1="4" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#6366F1"/>
+                <stop offset="50%" stop-color="#8B5CF6"/>
+                <stop offset="100%" stop-color="#EC4899"/>
+              </linearGradient>
+            </defs>
+          </svg>
+                  </Link>
+        </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          {/* Sidebar content here */}
-          <ul className="menu w-full grow">
-            {/* List item */}
+        <nav className="p-4">
+          <ul className="space-y-2">
+            {/* Home */}
             <li>
               <Link
-              to="/"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
+                to="/"
+                className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition"
               >
-                {/* Home icon */}
-                <House />
-                <span className="is-drawer-close:hidden">Homepage</span>
+                <House className="w-5 h-5" />
+                <span>Homepage</span>
               </Link>
             </li>
 
-            {
-              userInfo?.role === 'admin' && 
-              <div>
-                <Link
-                to="/dashboard/manage-tuition"
-                >    
+            {/* Admin Routes */}
+            {userInfo?.role === 'admin' && (
+              <>
                 <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Manage Tuition"
-              >
-                {/* Settings icon */}
-               <NotebookTabs />
-                <span className="is-drawer-close:hidden">Manage tuition</span>
-              </button>
-            </li>
-            </Link>
-             <Link
-                to="/dashboard/manage-users"
-                >    
+                  <Link
+                    to="/dashboard/manage-tuition"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition"
+                  >
+                    <NotebookTabs className="w-5 h-5" />
+                    <span>Manage Tuitions</span>
+                  </Link>
+                </li>
                 <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Manage Users"
-              >
-                {/* Settings icon */}
-               <SquareUser></SquareUser>
-                <span className="is-drawer-close:hidden">Manage Users</span>
-              </button>
-            </li>
-            </Link>
-            </div>
-            }
-            {
-              userInfo?.role === 'tutor' && 
-              <div>
-                <Link
-                to="/dashboard/ongoing-tuitions"
-                >    
+                  <Link
+                    to="/dashboard/manage-users"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition"
+                  >
+                    <SquareUser className="w-5 h-5" />
+                    <span>Manage Users</span>
+                  </Link>
+                </li>
+              </>
+            )}
+
+            {/* Tutor Routes */}
+            {userInfo?.role === 'tutor' && (
+              <>
                 <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Ongoing Tuition"
-              >
-                {/* Settings icon */}
-               <NotebookTabs />
-                <span className="is-drawer-close:hidden">Ongoing tuition</span>
-              </button>
-            </li>
-            </Link>
-             <Link
-                to="/dashboard/manage-users"
-                >    
+                  <Link
+                    to="/dashboard/ongoing-tuitions"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-purple-50 hover:text-purple-600 transition"
+                  >
+                    <NotebookTabs className="w-5 h-5" />
+                    <span>Ongoing Tuitions</span>
+                  </Link>
+                </li>
                 <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Manage Users"
-              >
-                {/* Settings icon */}
-               <SquareUser></SquareUser>
-                <span className="is-drawer-close:hidden">Manage Users</span>
-              </button>
-            </li>
-            </Link>
-            </div>
+                  <Link
+                    to="/dashboard/profile-settings"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-purple-50 hover:text-purple-600 transition"
+                  >
+                    <UserRoundPen className="w-5 h-5" />
+                    <span>Profile Settings</span>
+                  </Link>
+                </li>
+              </>
+            )}
 
-            }
-            {
-              userInfo?.role === 'student' && <div>
-                  {/* List item */}
-                <Link
-                to="/dashboard/approved-tuition"
-                >
-            <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My tuition"
-              >
-                {/* Settings icon */}
-                <Landmark />
-                <span className="is-drawer-close:hidden">My tuition</span>
-              </button>
-            </li>
-            </Link>
-            <Link
-            to="/dashboard/applied-tutors"
-            >
-            <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Applied Tutor"
-              >
-                {/* Settings icon */}
-                <FileUser />
-                <span className="is-drawer-close:hidden">Applied Tutor</span>
-              </button>
-              
-            </li>
-            </Link>
-
-            <Link
-            to="/dashboard/payment-history"
-            >
-             <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Payment History"
-              >
-                {/* Settings icon */}
-              <BadgeDollarSign />
-                <span className="is-drawer-close:hidden">Payment History</span>
-              </button>
-              
-            </li>
-            </Link>
-
-             {/* List item */}
-             <Link 
-             to="/dashboard/post-tuition"
-             >
-             <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Post tuition"
-              >
-                {/* Settings icon */}
-                <Milestone />
-                <span className="is-drawer-close:hidden">Post tuition</span>
-              </button>
-              
-            </li>
-             </Link>
-
-            <Link
-            to="/dashboard/profile-settings"
-            >
-
-             <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Profile settings"
-              >
-                {/* Settings icon */}
-                <UserRoundPen />
-                <span className="is-drawer-close:hidden">Profile Settings</span>
-              </button>
-             
-            </li>
-            </Link>
-
-              </div>
-            }
-           
-         
+            {/* Student Routes */}
+            {userInfo?.role === 'student' && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/approved-tuition"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
+                  >
+                    <Landmark className="w-5 h-5" />
+                    <span>My Tuitions</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/applied-tutors"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
+                  >
+                    <FileUser className="w-5 h-5" />
+                    <span>Applied Tutors</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/payment-history"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
+                  >
+                    <BadgeDollarSign className="w-5 h-5" />
+                    <span>Payment History</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/post-tuition"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
+                  >
+                    <Milestone className="w-5 h-5" />
+                    <span>Post Tuition</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/profile-settings"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
+                  >
+                    <UserRoundPen className="w-5 h-5" />
+                    <span>Profile Settings</span>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
+        </nav>
+
+       
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-auto">
+        {/* Top Navbar */}
+        <header className="bg-white shadow-sm sticky top-0 z-10">
+          <div className="px-6 py-4 flex items-center justify-between">
+            <h1 className="text-xl font-semibold text-gray-800">Dashboard</h1>
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600">Welcome, {user?.displayName || user?.email}!</span>
+            </div>
+          </div>
+        </header>
+
+        {/* Page Content */}
+        <div className='bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-5'>
+          <Outlet />
         </div>
-      </div>
+      </main>
     </div>
   );
 };

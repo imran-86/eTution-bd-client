@@ -61,7 +61,7 @@ export default function PostTuition() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center p-4">
+      <div className="min-h-screen  flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-2xl p-12 max-w-md w-full text-center">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="w-12 h-12 text-green-600" />

@@ -115,7 +115,7 @@ export default function ProfileSettings() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center">
+      <div className="min-h-screen  flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600 mx-auto mb-4"></div>
           <p className="text-gray-600 text-lg">Loading profile...</p>
@@ -125,11 +125,11 @@ export default function ProfileSettings() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 py-12 px-4">
+    <div className="min-h-screen  py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
             Profile Settings
           </h1>
           <p className="text-lg text-gray-600">
