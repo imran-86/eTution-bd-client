@@ -15,6 +15,7 @@ import OngoingTuitions from "../Pages/Dashboard/Tutor/OngoingTuitions";
 import AppliedTutors from "../Pages/Dashboard/Student/AppliedTutors";
 import PaymentSuccess from "../Pages/Dashboard/Student/PaymentSuccess";
 import PaymentHistory from "../Pages/Dashboard/Student/PaymentHistory";
+import ProfileSettings from "../Pages/Dashboard/Student/ProfileSettings";
 
 
 const  router = createBrowserRouter([
@@ -85,6 +86,10 @@ const  router = createBrowserRouter([
       {
         path: 'payment-history',
         Component: PaymentHistory
+      },
+      {
+        path: 'profile-settings',
+        Component: ProfileSettings,
       }
     ]
   }

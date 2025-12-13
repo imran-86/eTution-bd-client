@@ -194,6 +194,11 @@ const DashBoardLayout = () => {
               
             </li>
              </Link>
+
+            <Link
+            to="/dashboard/profile-settings"
+            >
+
              <li>
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -205,6 +210,7 @@ const DashBoardLayout = () => {
               </button>
              
             </li>
+            </Link>
 
               </div>
             }
