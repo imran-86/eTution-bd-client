@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { Link } from 'react-router';
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+
 import { CheckCircle, CreditCard, Hash, Home, History, ArrowRight, Download } from 'lucide-react';
+import useAxios from '../../../Hooks/useAxios';
 
 const PaymentSuccess = () => {
     const [searchParams] = useSearchParams();
@@ -10,11 +11,11 @@ const PaymentSuccess = () => {
     const [loading, setLoading] = useState(true);
 
     const sessionId = searchParams.get('session_id');
-    const axiosSecure = useAxiosSecure();
+    const axiosInstance = useAxios();
 
     useEffect(() => {
         if (sessionId) {
-            axiosSecure.patch(`/payment-success?session_id=${sessionId}`)
+            axiosInstance.patch(`/payment-success?session_id=${sessionId}`)
                 .then(res => {
                     setPaymentInfo({
                         transactionId: res.data.transactionId,
@@ -27,7 +28,7 @@ const PaymentSuccess = () => {
                     setLoading(false);
                 });
         }
-    }, [sessionId, axiosSecure]);
+    }, [sessionId, axiosInstance]);
 
     if (loading) {
         return (

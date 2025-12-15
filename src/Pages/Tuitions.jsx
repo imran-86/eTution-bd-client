@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import useAxios from '../Hooks/useAxios';
-
+import React, { useEffect, useState } from "react";
+import useAxios from "../Hooks/useAxios";
 
 const Tuitions = () => {
-    const [tuitions, setTuitions] = useState([]);
+  const [tuitions, setTuitions] = useState([]);
   const axiosInstance = useAxios();
   useEffect(() => {
     axiosInstance.get("/tuitions").then((data) => {
-    //   console.log(data.data);
+      //   console.log(data.data);
       setTuitions(data.data);
     });
   }, []);
-    return (
-        <div className="py-16">
+  return (
+    <div className="py-16">
       <div className="w-10/12 mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-         Tuition Opportunities
+            Tuition Opportunities
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Find the perfect tutoring opportunity that matches your expertise
@@ -44,7 +43,7 @@ const Tuitions = () => {
                     {tuition.class}
                   </span>
                 </div>
-                <p className="text-indigo-100 text-sm">📍 {tuition.location}</p>
+                <p className="text-purple-300 text-sm">📍 {tuition.location}</p>
               </div>
 
               {/* Card Body */}
@@ -72,15 +71,12 @@ const Tuitions = () => {
                   Apply Now
                 </button>
               </div>
-
             </div>
           ))}
         </div>
-
-       
       </div>
     </div>
-    );
+  );
 };
 
 export default Tuitions;

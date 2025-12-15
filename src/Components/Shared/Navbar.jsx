@@ -20,13 +20,13 @@ const Navbar = () => {
   }
 
   const links = <>
-     <li><NavLink className='mr-4'>Home</NavLink></li>
-     <li><NavLink to="/all-tuitions" className='mr-4'>Tuitions</NavLink></li>
-     <li><NavLink to="/tutors" className='mr-4'>Tutor</NavLink></li>
-     <li><NavLink to="/about" className='mr-4'>About</NavLink></li>
-     <li><NavLink to="/contact-us" className='mr-4'>Contact</NavLink></li>
+     <li><NavLink className='mr-4 text-gray-700 font-semibold'>Home</NavLink></li>
+     <li><NavLink to="/all-tuitions" className='mr-4 text-gray-700 font-semibold'>Tuitions</NavLink></li>
+     <li><NavLink to="/tutors" className='mr-4 text-gray-700 font-semibold'>Tutor</NavLink></li>
+     <li><NavLink to="/about" className='mr-4 text-gray-700 font-semibold'>About</NavLink></li>
+     <li><NavLink to="/contact-us" className='mr-4 text-gray-700 font-semibold'>Contact</NavLink></li>
      {
-      user&&<li><NavLink to="/dashboard" className='mr-4'>Dashboard</NavLink></li>
+      user&&<li><NavLink to="/dashboard" className='mr-4 text-gray-700 font-semibold'>Dashboard</NavLink></li>
      }
      
   </>

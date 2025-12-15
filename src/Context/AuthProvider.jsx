@@ -14,6 +14,9 @@ import useAxios from "../Hooks/useAxios";
 
 
 
+
+
+
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -51,12 +54,15 @@ const AuthProvider = ({ children }) => {
         const loggedUser = {email: currentUser.email};
         axiosInstance.post('/getToken',loggedUser)
         .then(data=>{
-            // console.log('after getting the token ',data.data);
+            console.log('after getting the token ',data.data);
             localStorage.setItem('token', data.data.token)
 
             
         })
       }
+      // else{
+      //   localStorage.removeItem('token');
+      // }
       setLoading(false);
     });
     return () => {

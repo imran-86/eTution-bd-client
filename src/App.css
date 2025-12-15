@@ -1,2 +1,5 @@
 @import "tailwindcss";
 @plugin "daisyui";
+.active{
+    border-bottom: 2px solid purple;
+}

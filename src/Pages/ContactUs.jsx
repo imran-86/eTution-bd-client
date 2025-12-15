@@ -1,21 +1,29 @@
-import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, MessageSquare, Clock, CheckCircle } from 'lucide-react';
-import Swal from 'sweetalert2';
+import { useState } from "react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  MessageSquare,
+  Clock,
+  CheckCircle,
+} from "lucide-react";
+import Swal from "sweetalert2";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -23,20 +31,20 @@ export default function ContactUs() {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      console.log('Contact form submitted:', formData);
-      
+      console.log("Contact form submitted:", formData);
+
       Swal.fire({
-        title: 'Message Sent!',
-        text: 'Thank you for contacting us. We will get back to you soon!',
-        icon: 'success',
-        confirmButtonColor: '#4F46E5'
+        title: "Message Sent!",
+        text: "Thank you for contacting us. We will get back to you soon!",
+        icon: "success",
+        confirmButtonColor: "#4F46E5",
       });
 
       setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
       });
       setLoading(false);
     }, 1500);
@@ -51,7 +59,8 @@ export default function ContactUs() {
             Contact Us
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Have a question or need assistance? We're here to help! Reach out to us and we'll respond as soon as possible.
+            Have a question or need assistance? We're here to help! Reach out to
+            us and we'll respond as soon as possible.
           </p>
         </div>
 
@@ -67,7 +76,10 @@ export default function ContactUs() {
               <p className="text-gray-600 text-sm mb-3">
                 Send us an email anytime!
               </p>
-              <a href="mailto:support@tutorhub.com" className="text-indigo-600 font-semibold hover:underline">
+              <a
+                href="mailto:support@tutorhub.com"
+                className="text-indigo-600 font-semibold hover:underline"
+              >
                 support@tutorhub.com
               </a>
             </div>
@@ -81,7 +93,10 @@ export default function ContactUs() {
               <p className="text-gray-600 text-sm mb-3">
                 Mon-Fri from 9am to 6pm
               </p>
-              <a href="tel:+8801812345678" className="text-purple-600 font-semibold hover:underline">
+              <a
+                href="tel:+8801812345678"
+                className="text-purple-600 font-semibold hover:underline"
+              >
                 +880 1812-345678
               </a>
             </div>
@@ -120,8 +135,12 @@ export default function ContactUs() {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
-                <h2 className="text-2xl font-bold text-white mb-2">Send us a Message</h2>
-                <p className="text-indigo-100">Fill out the form below and we'll get back to you shortly</p>
+                <h2 className="text-2xl font-bold text-white mb-2">
+                  Send us a Message
+                </h2>
+                <p className="text-purple-300">
+                  Fill out the form below and we'll get back to you shortly
+                </p>
               </div>
 
               <div className="p-8">
@@ -198,9 +217,25 @@ export default function ContactUs() {
                   >
                     {loading ? (
                       <>
-                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg
+                          className="animate-spin h-5 w-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
                         </svg>
                         Sending...
                       </>
@@ -218,7 +253,9 @@ export default function ContactUs() {
                   <div className="flex items-start gap-3">
                     <MessageSquare className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="text-sm font-semibold text-blue-900">Quick Response</p>
+                      <p className="text-sm font-semibold text-blue-900">
+                        Quick Response
+                      </p>
                       <p className="text-sm text-blue-700">
                         We typically respond within 24 hours on business days.
                       </p>
@@ -237,27 +274,39 @@ export default function ContactUs() {
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">How do I register as a tutor?</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                How do I register as a tutor?
+              </h3>
               <p className="text-gray-600">
-                Click on the "Register" button and select "Tutor" as your role. Fill in your qualifications and experience to get started.
+                Click on the "Register" button and select "Tutor" as your role.
+                Fill in your qualifications and experience to get started.
               </p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">How long does approval take?</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                How long does approval take?
+              </h3>
               <p className="text-gray-600">
-                Tuition posts are typically approved within 24-48 hours by our admin team after review.
+                Tuition posts are typically approved within 24-48 hours by our
+                admin team after review.
               </p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">How do I post a tuition request?</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                How do I post a tuition request?
+              </h3>
               <p className="text-gray-600">
-                After logging in as a student, go to your dashboard and click on "Post Tuition" to create a new tuition request.
+                After logging in as a student, go to your dashboard and click on
+                "Post Tuition" to create a new tuition request.
               </p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Is there any fee for students?</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Is there any fee for students?
+              </h3>
               <p className="text-gray-600">
-                Posting tuition requests is free for students. Payment is only made when you accept a tutor.
+                Posting tuition requests is free for students. Payment is only
+                made when you accept a tutor.
               </p>
             </div>
           </div>

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import useAxios from "../../Hooks/useAxios";
+
 import { Link } from "react-router";
+import useAxios from "../../Hooks/useAxios";
+
 
 const LatestTuitions = () => {
   const [latestTuitions, setLatestTuitions] = useState([]);
   const axiosInstance = useAxios();
   useEffect(() => {
     axiosInstance.get("/latest-tuitions").then((data) => {
-    //   console.log(data.data);
+      //   console.log(data.data);
       setLatestTuitions(data.data);
     });
   }, []);
@@ -20,7 +22,7 @@ const LatestTuitions = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Latest Tuition Opportunities
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-purple-300 max-w-2xl mx-auto">
             Find the perfect tutoring opportunity that matches your expertise
             and schedule
           </p>
@@ -45,7 +47,7 @@ const LatestTuitions = () => {
                     {tuition.class}
                   </span>
                 </div>
-                <p className="text-indigo-100 text-sm">📍 {tuition.location}</p>
+                <p className="text-purple-300 text-sm">📍 {tuition.location}</p>
               </div>
 
               {/* Card Body */}
@@ -73,16 +75,16 @@ const LatestTuitions = () => {
                   Apply Now
                 </button>
               </div>
-
             </div>
           ))}
         </div>
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <Link 
-          to="/tuitions"
-          className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
+          <Link
+            to="/tuitions"
+            className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+          >
             View All Tuitions →
           </Link>
         </div>

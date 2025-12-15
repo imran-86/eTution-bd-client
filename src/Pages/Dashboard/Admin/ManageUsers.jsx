@@ -1,8 +1,20 @@
-import { useState } from 'react';
-import { Eye, Edit, Trash2, Users, Mail, Phone, UserCircle, GraduationCap, Save, X } from 'lucide-react';
-import useAxios from '../../../Hooks/useAxios';
-import { useQuery } from '@tanstack/react-query';
-import Swal from 'sweetalert2';
+import { useState } from "react";
+import {
+  Eye,
+  Edit,
+  Trash2,
+  Users,
+  Mail,
+  Phone,
+  UserCircle,
+  GraduationCap,
+  Save,
+  X,
+} from "lucide-react";
+
+import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 export default function ManageUsers() {
   const [loading, setLoading] = useState(true);
@@ -11,21 +23,21 @@ export default function ManageUsers() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
   const [editFormData, setEditFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    role: '',
-    qualifications: '',
-    expectedSalary: '',
-    experience: ''
+    name: "",
+    email: "",
+    phone: "",
+    role: "",
+    qualifications: "",
+    expectedSalary: "",
+    experience: "",
   });
 
-  const axiosInstance = useAxios();
-  
+  const axiosSecure = useAxiosSecure();
+
   const { data: users = [], refetch } = useQuery({
-    queryKey: ['users'],
+    queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosInstance.get('/users');
+      const res = await axiosSecure.get("/users");
       setLoading(false);
       return res.data;
     },
@@ -43,90 +55,87 @@ export default function ManageUsers() {
       email: user.email,
       phone: user.phone,
       role: user.role,
-      qualifications: user.qualifications || '',
-      expectedSalary: user.expectedSalary || '',
-      experience: user.experience || ''
+      qualifications: user.qualifications || "",
+      expectedSalary: user.expectedSalary || "",
+      experience: user.experience || "",
     });
     setShowEditModal(true);
   };
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
-    setEditFormData(prev => ({
+    setEditFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSaveEdit = () => {
     setActionLoading(true);
-    
+
     try {
       Swal.fire({
-        title: 'Are you sure?',
-        text: 'You want to update this user information?',
-        icon: 'warning',
+        title: "Are you sure?",
+        text: "You want to update this user information?",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, update it!'
-      }).then(result => {
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, update it!",
+      }).then((result) => {
         if (result.isConfirmed) {
-          axiosInstance.put(`/users/${selectedUser._id}`, editFormData).then(result=>{
-            console.log(result);
-            
-          refetch();
-           Swal.fire({
-            title: 'Updated!',
-            text: 'User information has been updated.',
-            icon: 'success'
-          });
-          
-          setShowEditModal(false);
+          axiosSecure
+            .put(`/users/${selectedUser._id}`, editFormData)
+            .then((result) => {
+              console.log(result);
 
-          })
-         
-          
-         
+              refetch();
+              Swal.fire({
+                title: "Updated!",
+                text: "User information has been updated.",
+                icon: "success",
+              });
+
+              setShowEditModal(false);
+            });
         }
       });
-      
+
       setActionLoading(false);
     } catch (error) {
-      console.error('Error updating user:', error);
+      console.error("Error updating user:", error);
       setActionLoading(false);
-      
+
       Swal.fire({
-        title: 'Error!',
-        text: 'Failed to update user.',
-        icon: 'error'
+        title: "Error!",
+        text: "Failed to update user.",
+        icon: "error",
       });
     }
   };
 
   const handleDelete = (userId, userName) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: `You want to delete ${userName}? This action cannot be undone.`,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!'
-    }).then(result => {
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
       if (result.isConfirmed) {
-        axiosInstance.delete(`/users/${userId}`).then(result =>{
-            console.log(result);
-             
-            refetch();
-        
-        Swal.fire({
-          title: 'Deleted!',
-          text: 'User has been deleted.',
-          icon: 'success'
+        axiosSecure.delete(`/users/${userId}`).then((result) => {
+          console.log(result);
+
+          refetch();
+
+          Swal.fire({
+            title: "Deleted!",
+            text: "User has been deleted.",
+            icon: "success",
+          });
         });
-        })
-       
       }
     });
   };
@@ -167,7 +176,9 @@ export default function ManageUsers() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm">Total Users</p>
-                <p className="text-4xl font-bold text-indigo-600">{users.length}</p>
+                <p className="text-4xl font-bold text-indigo-600">
+                  {users.length}
+                </p>
               </div>
               <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center">
                 <Users className="w-8 h-8 text-indigo-600" />
@@ -180,7 +191,7 @@ export default function ManageUsers() {
               <div>
                 <p className="text-gray-600 text-sm">Students</p>
                 <p className="text-4xl font-bold text-purple-600">
-                  {users.filter(u => u.role === 'Student').length}
+                  {users.filter((u) => u.role === "Student").length}
                 </p>
               </div>
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
@@ -194,7 +205,7 @@ export default function ManageUsers() {
               <div>
                 <p className="text-gray-600 text-sm">Tutors</p>
                 <p className="text-4xl font-bold text-pink-600">
-                  {users.filter(u => u.role === 'Tutor').length}
+                  {users.filter((u) => u.role === "Tutor").length}
                 </p>
               </div>
               <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center">
@@ -210,20 +221,32 @@ export default function ManageUsers() {
             <table className="w-full">
               <thead className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-semibold">Name</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold">Email</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold">Phone</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold">Role</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold">Joined</th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold">Actions</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold">
+                    Name
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold">
+                    Email
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold">
+                    Phone
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold">
+                    Role
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold">
+                    Joined
+                  </th>
+                  <th className="px-6 py-4 text-center text-sm font-semibold">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {users.map((user, index) => (
-                  <tr 
+                  <tr
                     key={user._id}
                     className={`hover:bg-gray-50 transition-colors ${
-                      index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                      index % 2 === 0 ? "bg-white" : "bg-gray-50"
                     }`}
                   >
                     <td className="px-6 py-4">
@@ -231,7 +254,9 @@ export default function ManageUsers() {
                         <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
                           {user.name.charAt(0)}
                         </div>
-                        <span className="font-semibold text-gray-900">{user.name}</span>
+                        <span className="font-semibold text-gray-900">
+                          {user.name}
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -241,20 +266,22 @@ export default function ManageUsers() {
                       <span className="text-gray-700">{user.phone}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        user.role === 'Tutor' 
-                          ? 'bg-purple-100 text-purple-700' 
-                          : 'bg-blue-100 text-blue-700'
-                      }`}>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          user.role === "Tutor"
+                            ? "bg-purple-100 text-purple-700"
+                            : "bg-blue-100 text-blue-700"
+                        }`}
+                      >
                         {user.role}
                       </span>
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-sm text-gray-500">
-                        {new Date(user.createdAt).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric'
+                        {new Date(user.createdAt).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
                         })}
                       </span>
                     </td>
@@ -302,8 +329,10 @@ export default function ManageUsers() {
                       {selectedUser.name.charAt(0)}
                     </div>
                     <div>
-                      <h2 className="text-3xl font-bold mb-1">{selectedUser.name}</h2>
-                      <p className="text-indigo-100">{selectedUser.role}</p>
+                      <h2 className="text-3xl font-bold mb-1">
+                        {selectedUser.name}
+                      </h2>
+                      <p className="text-purple-300">{selectedUser.role}</p>
                     </div>
                   </div>
                   <button
@@ -319,42 +348,62 @@ export default function ManageUsers() {
               <div className="p-6 space-y-6">
                 {/* Contact Information */}
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Contact Information</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">
+                    Contact Information
+                  </h3>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-4">
                       <Mail className="w-5 h-5 text-indigo-600" />
                       <div>
                         <p className="text-sm text-gray-600">Email</p>
-                        <p className="font-semibold text-gray-900">{selectedUser.email}</p>
+                        <p className="font-semibold text-gray-900">
+                          {selectedUser.email}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-4">
                       <Phone className="w-5 h-5 text-indigo-600" />
                       <div>
                         <p className="text-sm text-gray-600">Phone</p>
-                        <p className="font-semibold text-gray-900">{selectedUser.phone}</p>
+                        <p className="font-semibold text-gray-900">
+                          {selectedUser.phone}
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Tutor Specific Information */}
-                {selectedUser.role === 'Tutor' && (
+                {selectedUser.role === "Tutor" && (
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-3">Professional Details</h3>
+                    <h3 className="text-lg font-bold text-gray-900 mb-3">
+                      Professional Details
+                    </h3>
                     <div className="space-y-3">
                       <div className="bg-gray-50 rounded-lg p-4">
-                        <p className="text-sm text-gray-600 mb-1">Qualifications</p>
-                        <p className="font-semibold text-gray-900">{selectedUser.qualifications}</p>
+                        <p className="text-sm text-gray-600 mb-1">
+                          Qualifications
+                        </p>
+                        <p className="font-semibold text-gray-900">
+                          {selectedUser.qualifications}
+                        </p>
                       </div>
                       <div className="grid grid-cols-2 gap-3">
                         <div className="bg-gray-50 rounded-lg p-4">
-                          <p className="text-sm text-gray-600 mb-1">Experience</p>
-                          <p className="font-semibold text-gray-900">{selectedUser.experience}</p>
+                          <p className="text-sm text-gray-600 mb-1">
+                            Experience
+                          </p>
+                          <p className="font-semibold text-gray-900">
+                            {selectedUser.experience}
+                          </p>
                         </div>
                         <div className="bg-gray-50 rounded-lg p-4">
-                          <p className="text-sm text-gray-600 mb-1">Expected Salary</p>
-                          <p className="font-semibold text-gray-900">৳{selectedUser.expectedSalary}/month</p>
+                          <p className="text-sm text-gray-600 mb-1">
+                            Expected Salary
+                          </p>
+                          <p className="font-semibold text-gray-900">
+                            ৳{selectedUser.expectedSalary}/month
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -363,16 +412,21 @@ export default function ManageUsers() {
 
                 {/* Account Information */}
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Account Information</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">
+                    Account Information
+                  </h3>
                   <div className="bg-gray-50 rounded-lg p-4 space-y-2">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Joined:</span>
                       <span className="font-semibold text-gray-900">
-                        {new Date(selectedUser.createdAt).toLocaleDateString('en-US', {
-                          month: 'long',
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}
+                        {new Date(selectedUser.createdAt).toLocaleDateString(
+                          "en-US",
+                          {
+                            month: "long",
+                            day: "numeric",
+                            year: "numeric",
+                          }
+                        )}
                       </span>
                     </div>
                   </div>
@@ -391,7 +445,7 @@ export default function ManageUsers() {
                 <div className="flex justify-between items-start">
                   <div>
                     <h2 className="text-3xl font-bold mb-2">Edit User</h2>
-                    <p className="text-indigo-100">{selectedUser.name}</p>
+                    <p className="text-purple-300">{selectedUser.name}</p>
                   </div>
                   <button
                     onClick={closeModals}
@@ -406,7 +460,9 @@ export default function ManageUsers() {
               <div className="p-6 space-y-4">
                 {/* Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Name
+                  </label>
                   <input
                     type="text"
                     name="name"
@@ -418,7 +474,9 @@ export default function ManageUsers() {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email
+                  </label>
                   <input
                     type="email"
                     name="email"
@@ -430,7 +488,9 @@ export default function ManageUsers() {
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone
+                  </label>
                   <input
                     type="tel"
                     name="phone"
@@ -442,7 +502,9 @@ export default function ManageUsers() {
 
                 {/* Role */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Role
+                  </label>
                   <select
                     name="role"
                     value={editFormData.role}
@@ -455,10 +517,12 @@ export default function ManageUsers() {
                 </div>
 
                 {/* Tutor Specific Fields */}
-                {editFormData.role === 'Tutor' && (
+                {editFormData.role === "Tutor" && (
                   <>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Qualifications</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Qualifications
+                      </label>
                       <input
                         type="text"
                         name="qualifications"
@@ -470,7 +534,9 @@ export default function ManageUsers() {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Experience</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Experience
+                        </label>
                         <input
                           type="text"
                           name="experience"
@@ -481,7 +547,9 @@ export default function ManageUsers() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Expected Salary</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Expected Salary
+                        </label>
                         <input
                           type="number"
                           name="expectedSalary"
@@ -503,9 +571,25 @@ export default function ManageUsers() {
                   >
                     {actionLoading ? (
                       <>
-                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg
+                          className="animate-spin h-5 w-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
                         </svg>
                         Saving...
                       </>

@@ -17,6 +17,8 @@ import PaymentSuccess from "../Pages/Dashboard/Student/PaymentSuccess";
 import PaymentHistory from "../Pages/Dashboard/Student/PaymentHistory";
 import ProfileSettings from "../Pages/Dashboard/Student/ProfileSettings";
 import ContactUs from "../Pages/ContactUs";
+import ReportAnalytics from "../Pages/Dashboard/Admin/ReportAnalytics";
+import PrivateRoute from "./PrivateRoute";
 
 
 const  router = createBrowserRouter([
@@ -57,44 +59,57 @@ const  router = createBrowserRouter([
   },
   {
     path: 'dashboard',
-    Component: DashBoardLayout,
+    element: <PrivateRoute><DashBoardLayout></DashBoardLayout></PrivateRoute>,
+    // Component: DashBoardLayout,
     children: [
       {
         path:'post-tuition',
-        Component: PostTuition
+        element: <PrivateRoute><PostTuition></PostTuition></PrivateRoute>
       },
       {
         path: 'manage-tuition',
-        Component: ManageTuition
+        element: <PrivateRoute><ManageTuition></ManageTuition></PrivateRoute>
+       
       },
       {
         path: "manage-users",
-        Component: ManageUsers,
+        element: <PrivateRoute><ManageUsers></ManageUsers></PrivateRoute>
+       
       },
       {
         path: 'approved-tuition',
-        Component: MyTuition
+        element: <PrivateRoute><MyTuition></MyTuition></PrivateRoute>
+        
       },
       {
         path: 'ongoing-tuitions',
-        Component: OngoingTuitions
-
+        element: <PrivateRoute><OngoingTuitions></OngoingTuitions></PrivateRoute>
+       
       },
       {
         path: 'applied-tutors',
-        Component: AppliedTutors
+        element: <PrivateRoute><AppliedTutors></AppliedTutors></PrivateRoute>
+        
       },
       {
         path: 'payment-success',
-        Component: PaymentSuccess
+        element: <PrivateRoute><PaymentSuccess></PaymentSuccess></PrivateRoute>
+       
       },
       {
         path: 'payment-history',
-        Component: PaymentHistory
+        element: <PrivateRoute><PaymentHistory></PaymentHistory></PrivateRoute>
+        
       },
       {
         path: 'profile-settings',
-        Component: ProfileSettings,
+        element: <PrivateRoute><ProfileSettings></ProfileSettings></PrivateRoute>
+      
+      },
+      {
+        path: 'reports-analytics',
+        element: <PrivateRoute><ReportAnalytics></ReportAnalytics></PrivateRoute>
+       
       }
     ]
   }

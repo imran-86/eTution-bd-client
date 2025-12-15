@@ -1,40 +1,49 @@
-import { use, useState } from 'react';
-import { User, Mail, Phone, Camera, Save, Lock, UserCircle } from 'lucide-react';
-import useAxios from '../../../Hooks/useAxios';
-import { AuthContext } from '../../../Context/AuthContext';
-import Swal from 'sweetalert2';
-import { useQuery } from '@tanstack/react-query';
+import { use, useState } from "react";
+import {
+  User,
+  Mail,
+  Phone,
+  Camera,
+  Save,
+  Lock,
+  UserCircle,
+} from "lucide-react";
+
+import { AuthContext } from "../../../Context/AuthContext";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 export default function ProfileSettings() {
-  const { user,setUser, updateUser } = use(AuthContext);
-  const axiosInstance = useAxios();
-  
+  const { user, setUser, updateUser } = use(AuthContext);
+  const axiosSecure = useAxiosSecure();
+
   const [formData, setFormData] = useState({
-    name: user?.name || '',
-    phone: user?.phone || '',
-    role: user?.role || '',
-    photoURL: user?.photoURL || '',
+    name: user?.name || "",
+    phone: user?.phone || "",
+    role: user?.role || "",
+    photoURL: user?.photoURL || "",
   });
   const [loading, setLoading] = useState(false);
   const [photoFile, setPhotoFile] = useState(null);
-  const [photoPreview, setPhotoPreview] = useState(user?.photoURL || '');
+  const [photoPreview, setPhotoPreview] = useState(user?.photoURL || "");
 
   // Fetch current user data
   const { data: userData, refetch } = useQuery({
-    queryKey: ['user', user?.email],
+    queryKey: ["user", user?.email],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/users/profile/${user?.email}`);
-    //   console.log(res.data[0].name);
-      
+      const res = await axiosSecure.get(`/users/profile/${user?.email}`);
+      //   console.log(res.data[0].name);
+
       setFormData({
         name: res.data[0].name,
         phone: res.data[0].phone,
-        role : res.data[0].role,
-        photoURL: res.data[0].photoURL || '',
+        role: res.data[0].role,
+        photoURL: res.data[0].photoURL || "",
       });
-    //   console.log(formData);
-      
-      setPhotoPreview(res.data.photoURL || '');
+      //   console.log(formData);
+
+      setPhotoPreview(res.data.photoURL || "");
       return res.data;
     },
     enabled: !!user?.email,
@@ -42,9 +51,9 @@ export default function ProfileSettings() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -68,7 +77,7 @@ export default function ProfileSettings() {
 
       if (photoFile) {
         const formDataPhoto = new FormData();
-        formDataPhoto.append('photo', photoFile);
+        formDataPhoto.append("photo", photoFile);
         photoURL = photoPreview;
       }
 
@@ -78,37 +87,41 @@ export default function ProfileSettings() {
         photoURL: photoURL,
       };
 
-      await axiosInstance.put(`/users/profile/${user?.email}`, updateData);
+      await axiosSecure.put(`/users/profile/${user?.email}`, updateData);
 
       if (updateUser) {
-        await updateUser({displayName : formData.name,photoURL : photoURL}).then(()=>{
-         setUser({...user,displayName : formData.name,photoURL : photoURL});
-         
-      }).catch((err)=>{
-        console.log(err);
-        setUser(user)
-        
-      })
+        await updateUser({ displayName: formData.name, photoURL: photoURL })
+          .then(() => {
+            setUser({
+              ...user,
+              displayName: formData.name,
+              photoURL: photoURL,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            setUser(user);
+          });
       }
 
       refetch();
       setLoading(false);
 
       Swal.fire({
-        title: 'Success!',
-        text: 'Profile updated successfully',
-        icon: 'success',
-        confirmButtonColor: '#4F46E5',
+        title: "Success!",
+        text: "Profile updated successfully",
+        icon: "success",
+        confirmButtonColor: "#4F46E5",
       });
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error("Error updating profile:", error);
       setLoading(false);
-      
+
       Swal.fire({
-        title: 'Error!',
-        text: 'Failed to update profile',
-        icon: 'error',
-        confirmButtonColor: '#EF4444',
+        title: "Error!",
+        text: "Failed to update profile",
+        icon: "error",
+        confirmButtonColor: "#EF4444",
       });
     }
   };
@@ -174,22 +187,24 @@ export default function ProfileSettings() {
                   {formData.name}
                 </h2>
                 <p className="text-gray-600 mb-1">{user?.email}</p>
-                <span className={`inline-block px-4 py-1 rounded-full text-sm font-semibold ${
-                  user?.role === 'Tutor' || user?.role === 'tutor'
-                    ? 'bg-purple-100 text-purple-700' 
-                    : user?.role === 'Admin' || user?.role === 'admin'
-                    ? 'bg-red-100 text-red-700'
-                    : 'bg-blue-100 text-blue-700'
-                }`}>
+                <span
+                  className={`inline-block px-4 py-1 rounded-full text-sm font-semibold ${
+                    user?.role === "Tutor" || user?.role === "tutor"
+                      ? "bg-purple-100 text-purple-700"
+                      : user?.role === "Admin" || user?.role === "admin"
+                      ? "bg-red-100 text-red-700"
+                      : "bg-blue-100 text-blue-700"
+                  }`}
+                >
                   {user?.role}
                 </span>
 
                 <div className="mt-6 pt-6 border-t border-gray-200">
                   <p className="text-sm text-gray-500">Member since</p>
                   <p className="text-sm font-semibold text-gray-900">
-                    {new Date(userData?.createdAt).toLocaleDateString('en-US', {
-                      month: 'long',
-                      year: 'numeric'
+                    {new Date(userData?.createdAt).toLocaleDateString("en-US", {
+                      month: "long",
+                      year: "numeric",
                     })}
                   </p>
                 </div>
@@ -201,8 +216,12 @@ export default function ProfileSettings() {
           <div className="md:col-span-2">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
-                <h2 className="text-2xl font-bold text-white">Personal Information</h2>
-                <p className="text-indigo-100">Update your profile details below</p>
+                <h2 className="text-2xl font-bold text-white">
+                  Personal Information
+                </h2>
+                <p className="text-purple-300">
+                  Update your profile details below
+                </p>
               </div>
               {/* {
                 <div>
@@ -242,7 +261,9 @@ export default function ProfileSettings() {
                     readOnly
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed"
                   />
-                  <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Email cannot be changed
+                  </p>
                 </div>
 
                 {/* Phone */}
@@ -276,7 +297,9 @@ export default function ProfileSettings() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
                     placeholder="https://example.com/photo.jpg"
                   />
-                  <p className="text-xs text-gray-500 mt-1">Or upload a photo using the camera icon above</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Or upload a photo using the camera icon above
+                  </p>
                 </div>
 
                 {/* Role (Read-only) */}
@@ -298,9 +321,12 @@ export default function ProfileSettings() {
                   <div className="flex items-start gap-3">
                     <Lock className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="text-sm font-semibold text-blue-900">Security Note</p>
+                      <p className="text-sm font-semibold text-blue-900">
+                        Security Note
+                      </p>
                       <p className="text-sm text-blue-700">
-                        To change your password, please use the "Forgot Password" option on the login page or contact support.
+                        To change your password, please use the "Forgot
+                        Password" option on the login page or contact support.
                       </p>
                     </div>
                   </div>
@@ -315,9 +341,25 @@ export default function ProfileSettings() {
                   >
                     {loading ? (
                       <>
-                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg
+                          className="animate-spin h-5 w-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
                         </svg>
                         Updating...
                       </>

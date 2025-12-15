@@ -1,9 +1,10 @@
 import { use, useState } from 'react';
 import { Eye, BookOpen, MapPin, DollarSign, Calendar, User, Clock, CheckCircle, X, Send } from 'lucide-react';
-import useAxios from '../../../Hooks/useAxios';
+
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../../Context/AuthContext';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 export default function OngoingTuitions() {
   const [selectedTuition, setSelectedTuition] = useState(null);
@@ -17,13 +18,13 @@ export default function OngoingTuitions() {
 });
   
   const { user } = use(AuthContext);
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure(); 
 
   
   const { data: approvedTuitions = [], isLoading } = useQuery({
     queryKey: ['approvedTuitions', 'Approved'],
     queryFn: async () => {
-      const res = await axiosInstance.get('/tuitions/ongoing?status=Approved');
+      const res = await axiosSecure.get('/tuitions/ongoing?status=Approved');
       console.log(res.data);
       return res.data;
     },
@@ -66,7 +67,7 @@ export default function OngoingTuitions() {
       }).then(result => {
         if (result.isConfirmed) {
          
-            axiosInstance.post(`/applications`, {
+            axiosSecure.post(`/applications`, {
              tuitionId: selectedTuition._id,
       tuitionTitle:`${selectedTuition.subject} - ${selectedTuition.class}`,
       studentEmail : selectedTuition.studentEmail,
@@ -79,7 +80,7 @@ export default function OngoingTuitions() {
       appliedAt: new Date().toISOString()
           });
 
-          axiosInstance.post('/tutors', {
+          axiosSecure.post('/tutors', {
             name : user?.name,
             email : user?.email,
             qualifications : applicationForm.qualifications,

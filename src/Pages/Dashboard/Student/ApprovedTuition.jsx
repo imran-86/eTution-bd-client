@@ -1,8 +1,9 @@
 import { use, useState } from 'react';
 import { Eye, BookOpen, MapPin, DollarSign, Calendar, User, Clock, CheckCircle, X } from 'lucide-react';
-import useAxios from '../../../Hooks/useAxios';
+
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../../Context/AuthContext';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 export default function ApprovedTuition() {
   const [selectedTuition, setSelectedTuition] = useState(null);
@@ -12,13 +13,13 @@ export default function ApprovedTuition() {
 //     console.log(user.email);
     
 //   }
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
  
   const { data: myTuitions = [] , isLoading } = useQuery({
     queryKey: ['myTuitions', 'Approved'],
     queryFn: async () => {
-       const res = await axiosInstance.get(`/tuitions/user/${user?.email}`);
+       const res = await axiosSecure.get(`/tuitions/user/${user?.email}`);
       
       return res.data;
     },
