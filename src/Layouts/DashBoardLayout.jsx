@@ -1,6 +1,7 @@
 import {
   BadgeDollarSign,
   FileUser,
+  HistoryIcon,
   House,
   Landmark,
   ListCollapse,
@@ -171,6 +172,15 @@ const DashBoardLayout = () => {
                   >
                     <UserRoundPen className="w-5 h-5" />
                     <span>Profile Settings</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/revenue-history"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-purple-50 hover:text-purple-600 transition"
+                  >
+                    <HistoryIcon className="w-5 h-5" />
+                    <span>Revenue History</span>
                   </Link>
                 </li>
               </>

@@ -62,6 +62,7 @@ export default function AppliedTutors() {
           tuitionTitle: application.tuitionTitle,
           tutorId: application.tutorId,
           applicationId: application._id,
+          tutorEmail: application.tutorEmail
         };
 
         console.log(paymentInfo);

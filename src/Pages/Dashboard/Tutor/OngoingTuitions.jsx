@@ -24,7 +24,7 @@ export default function OngoingTuitions() {
   const { data: approvedTuitions = [], isLoading } = useQuery({
     queryKey: ['approvedTuitions', 'Approved'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/tuitions/ongoing?status=Approved');
+      const res = await axiosSecure.get(`/applications/ongoing/${user?.email}?status=Approved`);
       console.log(res.data);
       return res.data;
     },
