@@ -29,7 +29,7 @@ const TuitionDetails = () => {
 
   useEffect(() => {
     axiosInstance.get(`/tuition-details/${id}`).then((data) => {
-      console.log(data.data);
+      // console.log(data.data);
       setTuitionData(data.data);
       setLoading(false);
     });
@@ -150,7 +150,7 @@ const TuitionDetails = () => {
 
       setApplyLoading(false);
     } catch (error) {
-      console.error('Error submitting application:', error);
+      // console.error('Error submitting application:', error);
       setApplyLoading(false);
 
       Swal.fire({

@@ -25,7 +25,7 @@ const LatestTutors = () => {
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                         Meet Our Expert Tutors
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-lg text-purple-300 max-w-2xl mx-auto">
                         Highly qualified educators ready to help you achieve your academic goals
                     </p>
                 </div>

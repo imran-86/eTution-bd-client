@@ -101,7 +101,7 @@ export default function ProfileSettings() {
              setLoading(false);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             setUser(user);
              setLoading(false);
           });
@@ -118,7 +118,7 @@ export default function ProfileSettings() {
         confirmButtonColor: "#4F46E5",
       });
     } catch (error) {
-      console.error("Error updating profile:", error);
+      // console.error("Error updating profile:", error);
       setLoading(false);
 
       Swal.fire({
@@ -149,7 +149,7 @@ export default function ProfileSettings() {
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
             Profile Settings
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-purple-300">
             Update your personal information and profile picture
           </p>
         </div>

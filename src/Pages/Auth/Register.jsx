@@ -36,7 +36,7 @@ export default function Register() {
     data.createdAt = new Date();
      
     createUser(data.email, data.password).then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         
         updateUser({displayName : data.name}).then(()=>{
            
@@ -46,18 +46,18 @@ export default function Register() {
             });
             
             axiosInstance.post("/user", data).then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setLoading(false)
                 navigate('/');
             });
         }).catch((err)=>{
-            console.log(err);
+            // console.log(err);
            
             setUser(result.user);
             navigate('/');
         })
     }).catch((error) => {
-        console.error("Registration error:", error);
+        // console.error("Registration error:", error);
     });
 };
   const handleGoogleSignIn = () => {
@@ -69,13 +69,13 @@ export default function Register() {
           role: formData.role,
         };
         axiosInstance.post("/user", userData).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
         });
         navigate("/");
-        console.log(result);
+        // console.log(result);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 
@@ -175,6 +175,9 @@ export default function Register() {
                 />
               </div>
               {errors.email?.type === "required" && (
+                <p className="text-red-500">Email is required</p>
+              )}
+               {errors.email && (
                 <p className="text-red-500">Email is required</p>
               )}
             </div>

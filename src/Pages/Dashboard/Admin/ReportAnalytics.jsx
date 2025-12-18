@@ -141,7 +141,7 @@ export default function ReportsAnalytics() {
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
             Reports & Analytics
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-purple-300">
             Monitor platform earnings and transaction history
           </p>
         </div>
@@ -244,10 +244,10 @@ export default function ReportsAnalytics() {
         {filteredTransactions.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
             <CreditCard className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+            <h3 className="text-2xl font-bold text-white mb-2">
               No Transactions Found
             </h3>
-            <p className="text-gray-600">
+            <p className="text-purple-300">
               No transactions match the selected filter
             </p>
           </div>

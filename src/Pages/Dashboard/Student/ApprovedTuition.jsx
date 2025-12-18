@@ -53,9 +53,9 @@ export default function ApprovedTuition() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-            My Tuitions
+            Approved Tuitions
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-purple-300">
             View your approved tuition requests
           </p>
         </div>

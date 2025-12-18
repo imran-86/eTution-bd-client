@@ -80,9 +80,9 @@ export default function PostTuition() {
 
     try {
       axiosSecure.post("/tuitions", tuitionData).then((res) => {
-        console.log(res);
+        // console.log(res);
 
-        console.log("tuition posted:", tuitionData);
+        // console.log("tuition posted:", tuitionData);
       });
 
       await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -94,7 +94,7 @@ export default function PostTuition() {
         setSuccess(false);
       }, 3000);
     } catch (error) {
-      console.error("Error posting tuition:", error);
+      // console.error("Error posting tuition:", error);
       setLoading(false);
     }
   };
@@ -125,14 +125,14 @@ export default function PostTuition() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 py-12 px-4">
+    <div className="min-h-screen  py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Post Your Tuition Request
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-purple-300">
             Fill in the details below and connect with qualified tutors
           </p>
         </div>

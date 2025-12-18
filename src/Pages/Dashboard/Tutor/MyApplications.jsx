@@ -92,7 +92,7 @@ export default function MyApplications() {
       
       setUpdateLoading(false);
     } catch (error) {
-      console.error('Error updating application:', error);
+    //   console.error('Error updating application:', error);
       setUpdateLoading(false);
       
       Swal.fire({
@@ -128,7 +128,7 @@ export default function MyApplications() {
             setActionLoading(false);
           })
           .catch((error) => {
-            console.error("Error deleting application:", error);
+            // console.error("Error deleting application:", error);
             setActionLoading(false);
             Swal.fire({
               title: "Error!",
@@ -159,7 +159,7 @@ export default function MyApplications() {
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
             My Applications
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-purple-300">
             View your Applications
           </p>
         </div>

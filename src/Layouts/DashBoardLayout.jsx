@@ -1,5 +1,6 @@
 import {
   BadgeDollarSign,
+  BookType,
   FileUser,
   HistoryIcon,
   House,
@@ -20,25 +21,22 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const DashBoardLayout = () => {
   const { user } = use(AuthContext);
-  if(user){
-    console.log(user);
-    
-  }
+ 
   const axiosSecure = useAxiosSecure();
   const { data: userInfo = [] } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/user?email=${user.email}`);
-      console.log(res);
+      // console.log(res);
       
       return res.data;
     },
   });
-  console.log(userInfo);
+  // console.log(userInfo);
   
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen ">
       {/* Sidebar */}
       <aside className="w-64 bg-white shadow-lg ">
         <div className="p-6 border-b">
@@ -212,6 +210,15 @@ const DashBoardLayout = () => {
                     className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
                   >
                     <Landmark className="w-5 h-5" />
+                    <span>Approved Tuitions</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/my-tuitions"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"
+                  >
+                    <BookType  className="w-5 h-5" />
                     <span>My Tuitions</span>
                   </Link>
                 </li>
@@ -270,7 +277,7 @@ const DashBoardLayout = () => {
             </div>
           </div>
         </header>
-
+           
         {/* Page Content */}
         <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-5">
           <Outlet />

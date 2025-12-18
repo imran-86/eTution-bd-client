@@ -23,12 +23,12 @@ export default function Login() {
 
     signInUser(data.email, data.password)
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         setLoading(false);
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setLoading(false);
         if (err.code === "auth/wrong-password") {
           setAuthError("Incorrect password. Please try again.");
@@ -48,10 +48,10 @@ export default function Login() {
     signInWithGoogle()
       .then((result) => {
         navigate("/");
-        console.log(result);
+        // console.log(result);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 

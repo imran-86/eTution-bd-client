@@ -9,7 +9,7 @@ const Features = () => {
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
               Why Choose TuitionHub?
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-purple-300">
               The best platform for connecting students and tutors
             </p>
           </div>

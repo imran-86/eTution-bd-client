@@ -23,7 +23,7 @@ export default function PaymentHistory() {
     queryKey: ["payments", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/payments/student/${user?.email}`);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     },
     enabled: !!user?.email,
@@ -60,7 +60,7 @@ export default function PaymentHistory() {
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
             Payment History
           </h1>
-          <p className="text-lg text-gray-600 text-white">
+          <p className="text-lg text-purple-300">
             View all your payment transactions and receipts
           </p>
         </div>

@@ -59,7 +59,7 @@ export default function ManageTuition() {
           axiosSecure
             .patch(`/tuitions/${tuitionId}`, { status: "Approved" })
             .then((result) => {
-              console.log(result);
+              // console.log(result);
               refetch();
               Swal.fire({
                 title: "Approved!",
@@ -73,7 +73,7 @@ export default function ManageTuition() {
       setShowModal(false);
       setActionLoading(false);
     } catch (error) {
-      console.error("Error approving tuition:", error);
+      // console.error("Error approving tuition:", error);
       setActionLoading(false);
 
       Swal.fire({
@@ -99,7 +99,7 @@ export default function ManageTuition() {
           axiosSecure
             .patch(`/tuitions/${tuitionId}`, { status: "Rejected" })
             .then((result) => {
-              console.log(result);
+              // console.log(result);
               refetch();
 
               Swal.fire({
@@ -114,7 +114,7 @@ export default function ManageTuition() {
       setShowModal(false);
       setActionLoading(false);
     } catch (error) {
-      console.error("Error approving tuition:", error);
+      // console.error("Error approving tuition:", error);
       setActionLoading(false);
 
       Swal.fire({
@@ -136,14 +136,14 @@ export default function ManageTuition() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 py-12 px-4">
+    <div className="min-h-screen  py-12 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
             Manage Tuitions
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-purple-300">
             Review and approve pending tuition requests
           </p>
         </div>

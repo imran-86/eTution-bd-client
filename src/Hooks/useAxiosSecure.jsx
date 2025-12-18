@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router';
 import { AuthContext } from '../Context/AuthContext';
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://e-tuition-bd-server-gules.vercel.app'
 })
 
 const useAxiosSecure = () => {
    const {logOut} = use(AuthContext);
-   console.log(logOut);
+   // console.log(logOut);
    
    const navigate = useNavigate();
     useEffect(()=>{
@@ -25,7 +25,7 @@ const useAxiosSecure = () => {
          const resInterceptor = axiosSecure.interceptors.response.use((response)=>{
             return response;
          },(error)=>{
-          console.log(error);
+         //  console.log(error);
 
          const statusCode = error.status;
          if(statusCode===401 || statusCode===403){

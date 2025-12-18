@@ -31,7 +31,7 @@ export default function ContactUs() {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      console.log("Contact form submitted:", formData);
+      // console.log("Contact form submitted:", formData);
 
       Swal.fire({
         title: "Message Sent!",

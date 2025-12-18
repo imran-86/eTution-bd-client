@@ -16,7 +16,7 @@ export default function OngoingTuitions() {
     queryKey: ['approvedTuitions', 'Approved'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/applications/ongoing/${user?.email}?status=Approved`);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     },
   });
@@ -47,7 +47,7 @@ export default function OngoingTuitions() {
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
             Ongoing Tuitions
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-purple-300">
              Approved tuition report
           </p>
         </div>

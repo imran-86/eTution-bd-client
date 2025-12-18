@@ -9,7 +9,7 @@ const HowPlatformWorks = () => {
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
               How the Platform Works
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-purple-300">
               Get started in just 3 simple steps
             </p>
           </div>

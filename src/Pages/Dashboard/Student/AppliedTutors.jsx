@@ -32,14 +32,14 @@ export default function AppliedTutors() {
       const res = await axiosSecure.get(
         `/applications/student/${user?.email}`
       );
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     },
     enabled: !!user?.email,
   });
 
   const handleAccept = async (application) => {
-    console.log("Application to accept:", application);
+    // console.log("Application to accept:", application);
 
     try {
       const result = await Swal.fire({
@@ -65,12 +65,12 @@ export default function AppliedTutors() {
           tutorEmail: application.tutorEmail
         };
 
-        console.log(paymentInfo);
+        // console.log(paymentInfo);
         const response = await axiosSecure.post(
           "/payment-checkout-session",
           paymentInfo
         );
-        console.log("Stripe ", response.data);
+        // console.log("Stripe ", response.data);
 
         if (response.data.url) {
           window.location.href = response.data.url;
@@ -79,7 +79,7 @@ export default function AppliedTutors() {
         }
       }
     } catch (error) {
-      console.error("Error creating payment session:", error);
+      // console.error("Error creating payment session:", error);
       setActionLoading(false);
 
       Swal.fire({
@@ -114,7 +114,7 @@ export default function AppliedTutors() {
             setActionLoading(false);
           })
           .catch((error) => {
-            console.error("Error rejecting application:", error);
+            // console.error("Error rejecting application:", error);
             setActionLoading(false);
             Swal.fire({
               title: "Error!",
@@ -145,10 +145,10 @@ export default function AppliedTutors() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
             Tutor Applications
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-purple-300">
             Review and manage tutor applications for your tuition posts
           </p>
         </div>

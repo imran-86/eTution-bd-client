@@ -23,6 +23,7 @@ import RevenueHistory from "../Pages/Dashboard/Tutor/RevenueHistory";
 import TuitionDetails from "../Pages/TuitionDetails";
 import MyApplications from "../Pages/Dashboard/Tutor/MyApplications";
 import ErrorPage from "../Components/ErrorPage";
+import MyTuitions from "../Pages/Dashboard/Student/MyTuitions";
 
 
 const  router = createBrowserRouter([
@@ -131,6 +132,10 @@ const  router = createBrowserRouter([
       {
         path: 'my-applications',
         element: <PrivateRoute><MyApplications></MyApplications></PrivateRoute>
+      },
+      {
+        path: 'my-tuitions',
+        element: <PrivateRoute><MyTuitions></MyTuitions></PrivateRoute>
       }
     ]
   }
