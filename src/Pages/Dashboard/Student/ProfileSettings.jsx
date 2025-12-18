@@ -15,7 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 export default function ProfileSettings() {
-  const { user, setUser, updateUser } = use(AuthContext);
+  const { user, setUser, updateUser , loading ,setLoading } = use(AuthContext);
   const axiosSecure = useAxiosSecure();
 
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ export default function ProfileSettings() {
     role: user?.role || "",
     photoURL: user?.photoURL || "",
   });
-  const [loading, setLoading] = useState(false);
+ 
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(user?.photoURL || "");
 
@@ -87,7 +87,7 @@ export default function ProfileSettings() {
         photoURL: photoURL,
       };
 
-      await axiosSecure.put(`/users/profile/${user?.email}`, updateData);
+      
 
       if (updateUser) {
         await updateUser({ displayName: formData.name, photoURL: photoURL })
@@ -97,14 +97,18 @@ export default function ProfileSettings() {
               displayName: formData.name,
               photoURL: photoURL,
             });
+           
+             setLoading(false);
           })
           .catch((err) => {
             console.log(err);
             setUser(user);
+             setLoading(false);
           });
       }
+      await axiosSecure.put(`/users/profile/${user?.email}`, updateData);
 
-      refetch();
+       refetch();
       setLoading(false);
 
       Swal.fire({

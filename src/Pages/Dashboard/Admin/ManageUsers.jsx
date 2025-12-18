@@ -191,7 +191,7 @@ export default function ManageUsers() {
               <div>
                 <p className="text-gray-600 text-sm">Students</p>
                 <p className="text-4xl font-bold text-purple-600">
-                  {users.filter((u) => u.role === "Student").length}
+                  {users.filter((u) => u.role === "student").length}
                 </p>
               </div>
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
@@ -205,7 +205,7 @@ export default function ManageUsers() {
               <div>
                 <p className="text-gray-600 text-sm">Tutors</p>
                 <p className="text-4xl font-bold text-pink-600">
-                  {users.filter((u) => u.role === "Tutor").length}
+                  {users.filter((u) => u.role === "tutor").length}
                 </p>
               </div>
               <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center">
@@ -511,8 +511,9 @@ export default function ManageUsers() {
                     onChange={handleEditChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   >
-                    <option value="Student">Student</option>
-                    <option value="Tutor">Tutor</option>
+                    <option value="student">student</option>
+                    <option value="tutor">tutor</option>
+                    <option value="admin">admin</option>
                   </select>
                 </div>
 

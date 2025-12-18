@@ -5,7 +5,7 @@ const Tuitions = () => {
   const [tuitions, setTuitions] = useState([]);
   const axiosInstance = useAxios();
   useEffect(() => {
-    axiosInstance.get("/tuitions").then((data) => {
+    axiosInstance.get("/all-tuitions").then((data) => {
       //   console.log(data.data);
       setTuitions(data.data);
     });

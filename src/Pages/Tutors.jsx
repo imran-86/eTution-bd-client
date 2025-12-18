@@ -4,8 +4,8 @@ import { div } from 'framer-motion/client';
 import { Link } from 'react-router';
 
 const Tutors = () => {
-
-      const [tutors, setTutors] = useState([]);
+   
+    const [tutors, setTutors] = useState([]);
   const axiosInstance = useAxios();
   useEffect(() => {
     axiosInstance.get("/tutors").then((data) => {
@@ -32,14 +32,16 @@ const Tutors = () => {
                                     {/* Tutor Info */}
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                                                {tutor.name}
+                                            <div className="w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                                <img src={tutor.photoURL} alt="" />
                                             </div>
                                             <div>
                                                 <h3 className="text-xl font-bold text-gray-900">
                                                     {tutor.name}
                                                 </h3>
-                                                <p className="text-sm text-gray-500">{tutor.experience} Experience</p>
+                                                <p className="text-sm text-gray-500">
+                                                  Experience :
+                                                  {tutor.experience} </p>
                                             </div>
                                         </div>
 

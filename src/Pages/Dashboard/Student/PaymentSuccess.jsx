@@ -128,7 +128,7 @@ const PaymentSuccess = () => {
                         {/* Action Buttons */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                             <Link
-                                to="/payment-history"
+                                to="/dashboard/payment-history"
                                 className="flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold text-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl"
                             >
                                 <History className="w-5 h-5" />

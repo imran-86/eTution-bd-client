@@ -14,6 +14,8 @@ const LatestTutors = () => {
 
     // Duplicate the tutors array for seamless loop
     const duplicatedTutors = [...latestTutors, ...latestTutors];
+    // console.log(duplicatedTutors);
+    
 
     return (
         <div className="py-16 overflow-hidden">
@@ -60,14 +62,16 @@ const LatestTutors = () => {
                                     {/* Tutor Info */}
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                                                {tutor.name}
+                                            <div className="w-16 h-16 rounded-full flex items-center justify-center  font-bold">
+                                                <img src={tutor.photoURL} alt="" />
                                             </div>
                                             <div>
                                                 <h3 className="text-xl font-bold text-gray-900">
                                                     {tutor.name}
                                                 </h3>
-                                                <p className="text-sm text-gray-500">{tutor.experience} Experience</p>
+                                                <p className="text-sm text-gray-500">
+                                                    Experience : 
+                                                     {tutor.experience}</p>
                                             </div>
                                         </div>
 
@@ -81,12 +85,8 @@ const LatestTutors = () => {
                                         </div>
                                     </div>
 
-                                    {/* Expected Salary Badge */}
-                                    <div className="flex justify-between items-center">
-                                        <span className="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
-                                            ৳{tutor.expectedSalary}/month
-                                        </span>
-                                    </div>
+                                   
+                                    
                                 </div>
 
                                 {/* Hover Overlay */}

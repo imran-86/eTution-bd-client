@@ -166,6 +166,15 @@ const DashBoardLayout = () => {
               <>
                 <li>
                   <Link
+                    to="/dashboard/my-applications"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-purple-50 hover:text-purple-600 transition"
+                  >
+                    <FileUser  className="w-5 h-5" />
+                    <span>My Applications</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     to="/dashboard/ongoing-tuitions"
                     className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-purple-50 hover:text-purple-600 transition"
                   >

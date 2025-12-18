@@ -21,6 +21,7 @@ import ReportAnalytics from "../Pages/Dashboard/Admin/ReportAnalytics";
 import PrivateRoute from "./PrivateRoute";
 import RevenueHistory from "../Pages/Dashboard/Tutor/RevenueHistory";
 import TuitionDetails from "../Pages/TuitionDetails";
+import MyApplications from "../Pages/Dashboard/Tutor/MyApplications";
 
 
 const  router = createBrowserRouter([
@@ -120,6 +121,10 @@ const  router = createBrowserRouter([
       {
         path: 'revenue-history',
         element: <PrivateRoute><RevenueHistory></RevenueHistory></PrivateRoute>
+      },
+      {
+        path: 'my-applications',
+        element: <PrivateRoute><MyApplications></MyApplications></PrivateRoute>
       }
     ]
   }

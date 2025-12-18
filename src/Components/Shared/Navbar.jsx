@@ -75,7 +75,7 @@ const Navbar = () => {
   
   
   <text x="65" y="28" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#4F46E5">
-    TutorHub
+    TuitionHub
   </text>
   <text x="65" y="44" font-family="Arial, sans-serif" font-size="10" fill="#6B7280">
     Learn. Teach. Grow.
