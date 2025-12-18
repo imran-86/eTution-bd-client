@@ -20,6 +20,7 @@ import ContactUs from "../Pages/ContactUs";
 import ReportAnalytics from "../Pages/Dashboard/Admin/ReportAnalytics";
 import PrivateRoute from "./PrivateRoute";
 import RevenueHistory from "../Pages/Dashboard/Tutor/RevenueHistory";
+import TuitionDetails from "../Pages/TuitionDetails";
 
 
 const  router = createBrowserRouter([
@@ -55,6 +56,10 @@ const  router = createBrowserRouter([
         {
           path: 'contact-us',
           Component: ContactUs
+        },
+        {
+          path: 'tuition-details/:id',
+          Component: TuitionDetails
         }
     ]
   },

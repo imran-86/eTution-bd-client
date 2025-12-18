@@ -20,14 +20,22 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const DashBoardLayout = () => {
   const { user } = use(AuthContext);
+  if(user){
+    console.log(user);
+    
+  }
   const axiosSecure = useAxiosSecure();
   const { data: userInfo = [] } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/user?email=${user.email}`);
+      console.log(res);
+      
       return res.data;
     },
   });
+  console.log(userInfo);
+  
 
   return (
     <div className="flex min-h-screen bg-gray-100">

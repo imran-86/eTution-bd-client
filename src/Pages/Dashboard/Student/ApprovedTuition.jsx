@@ -146,15 +146,7 @@ export default function ApprovedTuition() {
                     <Eye className="w-4 h-4" />
                     View Full Details
                   </button>
-                    <button
                    
-                    className="cursor-pointer w-full flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-all"
-                  >
-                    <DollarSign className="w-4 h-4" />
-                    {
-                      tuition.paymentStatus === 'Paid' ? <span>Paid</span> : <span>Make Payment</span>  
-                    }
-                  </button>
 
                 </div>
               </div>

@@ -26,24 +26,40 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const { createUser, signInWithGoogle } = use(AuthContext);
+  const { createUser, signInWithGoogle,user,setLoading ,setUser, updateUser } = use(AuthContext);
 
   const axiosInstance = useAxios();
 
-  const handleRegistration = (data) => {
+  const handleRegistration = async (data) => {
     const role = formData.role;
     data.role = role;
     data.createdAt = new Date();
-    //  console.log(data);
+     
     createUser(data.email, data.password).then((result) => {
-      console.log(result.user);
-      axiosInstance.post("/user", data).then((res) => {
-        console.log(res.data);
-      });
-
-      navigate("/");
+        console.log(result.user);
+        
+        updateUser({displayName : data.name}).then(()=>{
+           
+            setUser({
+                ...result.user,
+                displayName: data.name
+            });
+            
+            axiosInstance.post("/user", data).then((res) => {
+                console.log(res.data);
+                setLoading(false)
+                navigate('/');
+            });
+        }).catch((err)=>{
+            console.log(err);
+           
+            setUser(result.user);
+            navigate('/');
+        })
+    }).catch((error) => {
+        console.error("Registration error:", error);
     });
-  };
+};
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
