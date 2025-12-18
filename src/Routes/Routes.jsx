@@ -22,12 +22,14 @@ import PrivateRoute from "./PrivateRoute";
 import RevenueHistory from "../Pages/Dashboard/Tutor/RevenueHistory";
 import TuitionDetails from "../Pages/TuitionDetails";
 import MyApplications from "../Pages/Dashboard/Tutor/MyApplications";
+import ErrorPage from "../Components/ErrorPage";
 
 
 const  router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayouts></RootLayouts>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
         {
             index:true,
@@ -60,6 +62,10 @@ const  router = createBrowserRouter([
         },
         {
           path: 'tuition-details/:id',
+          Component: TuitionDetails
+        },
+        {
+          path: 'all-tuitions/tuition-details/:id',
           Component: TuitionDetails
         }
     ]

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useAxios from "../Hooks/useAxios";
+import { Link } from "react-router";
 
 const Tuitions = () => {
   const [tuitions, setTuitions] = useState([]);
@@ -67,9 +68,15 @@ const Tuitions = () => {
                 </div>
 
                 {/* Action Button */}
+               
+                   <Link
+                to={`tuition-details/${tuition._id}`}
+                >
                 <button className="w-full mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform group-hover:scale-105">
                   Apply Now
                 </button>
+                </Link>
+               
               </div>
             </div>
           ))}

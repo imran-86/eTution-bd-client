@@ -86,7 +86,7 @@ const LatestTuitions = () => {
         {/* View All Button */}
         <div className="text-center mt-12">
           <Link
-            to="/tuitions"
+            to="/all-tuitions"
             className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
           >
             View All Tuitions →
