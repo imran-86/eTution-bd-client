@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { use } from 'react';
 import Hero from '../Components/RandomComponent/Hero';
 import LatestTuitions from '../Components/RandomComponent/LatestTuitions';
 import LatestTutors from '../Components/RandomComponent/LatestTutors';
 import Features from '../Components/Features';
 import HowPlatformWorks from '../Components/HowPlatformWorks';
+import { AuthContext } from '../Context/AuthContext';
+import LoadingSpinner from '../Components/LoadingSpinner';
 
 const Home = () => {
+    const {loading} = use(AuthContext)
+    if(loading){
+        return <LoadingSpinner></LoadingSpinner>
+    }
     return (
         <div>
             <Hero></Hero>

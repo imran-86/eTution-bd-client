@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router";
 import useAxios from "../../Hooks/useAxios";
+import Swal from "sweetalert2";
 
 export default function Register() {
   const {
@@ -30,34 +31,68 @@ export default function Register() {
 
   const axiosInstance = useAxios();
 
-  const handleRegistration = async (data) => {
-    const role = formData.role;
-    data.role = role;
-    data.createdAt = new Date();
-     
-    createUser(data.email, data.password).then((result) => {
-        // console.log(result.user);
-        
-        updateUser({displayName : data.name}).then(()=>{
-           
-            setUser({
-                ...result.user,
-                displayName: data.name
+ const handleRegistration = async (data) => {
+  const role = formData.role;
+  data.role = role;
+  data.createdAt = new Date();
+  
+  setLoading(true); 
+  
+  createUser(data.email, data.password)
+    .then((result) => {
+      updateUser({ displayName: data.name })
+        .then(() => {
+          setUser({
+            ...result.user,
+            displayName: data.name
+          });
+          
+          axiosInstance.post("/user", data)
+            .then((res) => {
+              setLoading(false);
+              navigate('/');
+            })
+            .catch((err) => {
+              console.error("Database error:", err);
+              setLoading(false);
+              Swal.fire({
+                icon: 'error',
+                title: 'Database Error',
+                text: 'Failed to save user data. Please try again.',
+              });
             });
-            
-            axiosInstance.post("/user", data).then((res) => {
-                // console.log(res.data);
-                setLoading(false)
-                navigate('/');
-            });
-        }).catch((err)=>{
-            // console.log(err);
-           
-            setUser(result.user);
-            navigate('/');
         })
-    }).catch((error) => {
-        // console.error("Registration error:", error);
+        .catch((err) => {
+          console.error("Profile update error:", err);
+          setUser(result.user);
+          setLoading(false);
+          navigate('/');
+        });
+    })
+    .catch((error) => {
+      console.error("Registration error:", error);
+      setLoading(false);
+      
+      // Handle different Firebase errors
+      let errorMessage = 'An error occurred during registration';
+      
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'This email is already registered. Please login or use a different email.';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Invalid email address. Please check and try again.';
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = 'Password is too weak. Please use a stronger password.';
+      } else if (error.code === 'auth/network-request-failed') {
+        errorMessage = 'Network error. Please check your internet connection.';
+      } else {
+        errorMessage = error.message;
+      }
+      
+      Swal.fire({
+        icon: 'error',
+        title: 'Registration Failed',
+        text: errorMessage,
+      });
     });
 };
   const handleGoogleSignIn = () => {
